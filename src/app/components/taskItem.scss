@@ -1,0 +1,103 @@
+.task-item {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    background: var(--gray-alpha-200);
+
+    &:hover {
+        background: var(--button-primary-hover);
+    }
+
+    &_left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    &_right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    &_title {
+        display: flex;
+        align-items: center;
+    }
+
+    &_title h3 {
+        margin: 0;
+    }
+
+    &_checkbox {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #cccccc;
+        border-radius: 50%;
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:checked {
+            background-color: #6e7eea;
+            border-color: #6e7eea;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 46%;
+            left: 22%;
+            width: 6px;
+            height: 10px;
+            border-right: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: rotate(45deg) translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        &:checked::after {
+            opacity: 1;
+        }
+    }
+
+    &_important {
+        display: none;
+    }
+
+    .important-label {
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+    }
+
+    .star {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        background-color: #cccccc;
+        transition: background-color 0.3s ease;
+    }
+
+    .checked {
+        background-color: #6e7eea;
+        display: none;
+    }
+
+    &_important:checked + .important-label .unchecked {
+        display: none;
+    }
+
+    &_important:checked + .important-label .checked {
+        display: block;
+    }
+}
