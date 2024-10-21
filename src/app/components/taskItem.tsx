@@ -5,7 +5,7 @@ export default function TaskItem() {
             <div className="task-item_left">
                 <input type="checkbox" className="task-item_checkbox"/>
                 <div className="task-item_title">
-                    <h3>Task Title</h3>
+                    <h3>Task Title Hola</h3>
                 </div>
             </div>
             <div className="task-item_right">
