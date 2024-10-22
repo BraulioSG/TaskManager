@@ -1,20 +1,16 @@
-const HEX_PATTERN = new RegExp('^#([0-9]?[a-f])$\i')
-
-enum ThemeOptions {
-    DARK = "Dark",
-    LIGHT = "Light",
-    CUSTOM = "Custom",
-}
+const HEX_PATTERN = new RegExp('^#([0-9]|[a-f]|[A-F]){6}$')
 
 /**
  * Defines a color Theme for the app
  */
 class Theme {
-    private foreground: string = "";
-    private background: string = "";
-    private primary: string    = "";
-    private secondary: string  = "";
-    private accent: string     = "";
+    public name: string;
+
+    private foreground: string;
+    private background: string;
+    private primary: string;
+    private secondary: string;
+    private accent: string;
 
     /**
      * Constructor of Theme
@@ -24,18 +20,49 @@ class Theme {
      * @param secondary     secondary color
      * @param accent        accent color
      */
-    constructor(foreground?: string, background?: string, primary?: string, secondary?: string, accent?: string) {
-
+    constructor(name: string, foreground?: string, background?: string, primary?: string, secondary?: string, accent?: string) {
+        this.name = name;
         //Default Theme -> Light Theme
-        this.setForeground(foreground   ?? "#080d06");
-        this.setBackground(background   ?? "#f9fcf7");
-        this.setPrimary(primary         ?? "#64c345");
-        this.setSecondary(secondary     ?? "#ace49a");
-        this.setAccent(accent           ?? "#84dd67");
+        this.setForeground(foreground as string);
+        this.setBackground(background as string);
+        this.setPrimary(primary as string);
+        this.setSecondary(secondary as string);
+        this.setAccent(accent as string);
     }
 
-    public isHex(color: string): boolean {
+    /**
+     * Returns a format that can be stored in the local storage
+     */
+    public toString(): string{
+        return JSON.stringify({
+            name: this.name,
+            colors: {
+                foreground: this.foreground,
+                background: this.background,
+                primary: this.primary,
+                secondary: this.secondary,
+                accent: this.accent,
+            }
+        });
+    }
+
+    public static isHex(color: string): boolean {
+        //return true;
         return HEX_PATTERN.test(color);
+    }
+
+
+    /**
+     *
+     * @param theme a string JSON formated
+     */
+    public static parseTheme(theme: string): Theme {
+        const jsonObject = JSON.parse(theme);
+
+        const { name, colors } = jsonObject;
+        const { foreground, background, primary, secondary, accent } = colors;
+
+        return new Theme(name, foreground, background, primary, secondary, accent);
     }
 
     //SETTERS
@@ -44,11 +71,7 @@ class Theme {
      * @param color a string with 6 character hex format (0-9) || (A-F), is not case-sensitive
      */
     public setForeground(color: string) {
-        if(this.isHex(color)) {
-            this.foreground = color;
-        }else{
-            throw new Error("Unsupported color format. (setForeground)");
-        }
+        this.foreground = Theme.isHex(color) ? color : "#080d06";
     }
 
     /**
@@ -56,12 +79,8 @@ class Theme {
      * @param color a string with 6 character hex format (0-9) || (A-F), is not case-sensitive
      */
     public setBackground(color: string) {
-        if(this.isHex(color)) {
-            this.background = color;
-        }
-        else {
-            throw new Error("Unsupported color format. (setBackground)");
-        }
+        this.background = Theme.isHex(color) ? color : "#f9fcf7";
+
     }
 
     /**
@@ -69,12 +88,7 @@ class Theme {
      * @param color a string with 6 character hex format (0-9) || (A-F), is not case-sensitive
      */
     public setPrimary(color: string) {
-        if(this.isHex(color)) {
-            this.background = color;
-        }
-        else {
-            throw new Error("Unsupported color format. (setPrimary)");
-        }
+        this.primary = Theme.isHex(color) ? color : "#64c345";
     }
 
     /**
@@ -82,12 +96,7 @@ class Theme {
      * @param color a string with 6 character hex format (0-9) || (A-F), is not case-sensitive
      */
     public setSecondary(color: string) {
-        if(this.isHex(color)) {
-            this.background = color;
-        }
-        else {
-            throw new Error("Unsupported color format. (setSecondary)");
-        }
+        this.secondary = Theme.isHex(color) ? color : "#ace49a";
     }
 
     /**
@@ -95,12 +104,8 @@ class Theme {
      * @param color a string with 6 character hex format (0-9) || (A-F), is not case-sensitive
      */
     public setAccent(color: string) {
-        if(this.isHex(color)) {
-            this.background = color;
-        }
-        else {
-            throw new Error("Unsupported color format. (setAccent)");
-        }
+        this.accent = Theme.isHex(color) ? color : "#84dd67";
+
     }
 
     //GETTERS
@@ -115,4 +120,12 @@ class Theme {
     public getAccent(){ return this.accent; }
 }
 
-export { ThemeOptions, Theme };
+
+const DefaultThemes = {
+    "DARK" : new Theme("dark"),
+    "LIGHT" : new Theme("light"),
+    "CUSTOM" : new Theme("custom"),
+}
+
+
+export { DefaultThemes, Theme };
