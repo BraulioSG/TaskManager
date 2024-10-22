@@ -1,10 +1,10 @@
 import styles from "./page.module.css";
-import TaskItem  from "./components/taskItem";
+import TasksContainer from "./components/tasksContainer";
 
 export default function Home() {
   return (
     <div className={styles.page}>
-      <TaskItem />
+      <TasksContainer />
     </div>
   );
 }
