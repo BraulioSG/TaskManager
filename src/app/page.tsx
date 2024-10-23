@@ -4,7 +4,7 @@ import Sidebar from "@/app/components/Sidebar";
 
 import { TaskList } from "@/app/Models/Task";
 import { useState, createContext, useEffect } from "react";
-import { getTaskLists } from "@/app/utils/Storage";
+import { getPreferredTheme, getTaskLists } from "@/app/utils/Storage";
 
 
 import "./page.scss"
@@ -13,10 +13,12 @@ export const ListsContext = createContext([new TaskList("")])
 export const ActiveListContext = createContext(0);
 
 export default function Home() {
+  const [theme, setTheme] = useState<'dark' | 'light'>();
   const [lists, setLists] = useState<TaskList[]>([]);
   const [activeIdx, setActiveIdx] = useState<number>(0);
 
   useEffect(() => {
+    setTheme(getPreferredTheme());
     setLists(getTaskLists());
   }, []);
 
