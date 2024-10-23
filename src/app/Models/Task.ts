@@ -32,7 +32,7 @@ export class Task{
         })
     }
 
-    public static parse(str: Task): Task {
+    public static parse(str: string): Task {
         const {id, title, description, dueDate, imageUrl, completed, important} = JSON.parse(str) as Task;
         const task = new Task(title, description, dueDate);
         task.id = id;
@@ -89,12 +89,12 @@ export class TaskList {
     }
 
     public static parse(str: string): TaskList {
-        const {id, name, tasks}  =JSON.parse(str) as TaskList;
+        const {id, name, tasks} = JSON.parse(str);
 
         const list = new TaskList(name);
         list.id = id;
 
-        tasks.forEach(task => {
+        tasks.forEach((task: string) => {
             list.addTask(Task.parse(task));
         })
 
