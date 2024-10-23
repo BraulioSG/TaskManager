@@ -46,7 +46,7 @@ export default function TasksContainer() {
             <aside className={`sidebar-details ${selectedTask ? "show" : ""}`}>
                 {
                     selectedTask ? (
-                        <TaskDetails />
+                        <TaskDetails  task={selectedTask} onClose={() => setSelectedTask(null)}/>
                     ) : null
                     
                 }
