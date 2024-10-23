@@ -1,16 +1,19 @@
 "use client"
-import TasksContainer from "./components/tasksContainer";
-import Sidebar from "@/app/components/Sidebar";
+import "./page.scss"
 
 import { TaskList } from "@/app/Models/Task";
 import { useState, createContext, useEffect } from "react";
 import { getPreferredTheme, getTaskLists } from "@/app/utils/Storage";
 
+import TasksContainer from "./components/tasksContainer";
+import Sidebar from "@/app/components/Sidebar";
+import ThemeToggler from "./components/ThemeToggler";
 
-import "./page.scss"
 
+//Contexts
 export const ListsContext = createContext([new TaskList("")])
 export const ActiveListContext = createContext(0);
+export const ThemeContext = createContext('dark' as "dark" | "light")
 
 export default function Home() {
   const [theme, setTheme] = useState<'dark' | 'light'>();
@@ -22,13 +25,18 @@ export default function Home() {
     setLists(getTaskLists());
   }, []);
 
+  document.documentElement.setAttribute("data-theme", theme as string);
+
   return (
     <ListsContext.Provider value={lists}>
       <ActiveListContext.Provider value={activeIdx}>
-        <div className={"main-container"}>
-          <Sidebar setLists={setLists} setActiveIdx={setActiveIdx} />
-          <TasksContainer setLists={setLists} />
-        </div>
+        <ThemeContext.Provider value={theme}>
+          <div className={"main-container"}>
+            <ThemeToggler setTheme={setTheme} />
+            <Sidebar setLists={setLists} setActiveIdx={setActiveIdx} />
+            <TasksContainer setLists={setLists} />
+          </div>
+        </ThemeContext.Provider>
       </ActiveListContext.Provider>
     </ListsContext.Provider>
 

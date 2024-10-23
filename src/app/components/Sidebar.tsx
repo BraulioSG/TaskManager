@@ -13,9 +13,6 @@ export default function Sidebar({ setLists, setActiveIdx }) {
     const activeIdx = useContext(ActiveListContext);
     const [isOnFocus, setIsOnFocus] = useState<boolean>(true);
 
-
-
-
     //TESTING THE STORAGE
     useEffect(() => {
         setLists(getTaskLists());

@@ -5,9 +5,9 @@
 
   width: 300px;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(var(--background), 0.7);
   backdrop-filter: blur(5px);
-  color: black;
+  color: var(--text);
   border-radius: 10px;
 
   z-index: 100;
@@ -35,7 +35,7 @@
       }
       border: none;
       background: transparent;
-      color: black;
+      color:var(--text);
     }
   }
 
@@ -59,7 +59,7 @@
       gap: 10px;
 
       background-color: rgba(0, 0, 0, 0.05);
-      color: black;
+      color: var(--text);
 
       padding: 10px;
       min-height: 50px;
@@ -71,14 +71,19 @@
       text-overflow: ellipsis;
 
       &:hover{
-        background-color: #84dd6755;
+        background-color: rgba(var(--button-bg), 0.1);
+        color: rgb(var(--button-fg));
+
+        .key-to-press{
+          border-color: rgb(var(--button-fg));
+        }
       }
 
       &.activeList{
-        background-color: #b0e29f;
-        color: var(--primary);
+        background-color: rgba(var(--button-bg), 0.3);
+        color: rgb(var(--button-bg));
         .key-to-press{
-          border-color: var(--primary);
+          border-color: rgb(var(--button-bg));
         }
       }
 
@@ -109,12 +114,13 @@
     display: flex;
     flex-direction: row;
     gap: 10px;
+
     .newListBtn{
       padding: 10px;
       border-radius: 5px;
   
-      background-color: var(--primary);
-      color: black;
+      background-color: rgb(var(--button-bg));
+      color: rgb(var(--button-fg));
       font-weight: bold;
 
       display: flex;

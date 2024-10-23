@@ -1,10 +1,25 @@
+/* LIGTH THEME */
 :root {
   --text: #080d06;
-  --background: #f9fcf7;
-  --primary: #64c345;
-  --secondary: #ace49a;
-  --accent: #84dd67;
-  --background-task: 249, 252, 247;
+  --background: 249, 252, 247;
+  --primary: 100, 195, 69;
+  --secondary: 172, 228, 154;
+  --accent: 132, 221, 103;
+
+  --button-bg: var(--accent);
+  --button-fg: 0, 0, 0;
+
+  --background-task: var(--background);
+}
+
+/* DARK THEME */
+[data-theme="dark"] {
+  --text: white;
+  --background: 100, 120, 100;
+  --primary: 100, 195, 69;
+  --secondary: 172, 228, 154;
+  --accent: 132, 221, 103;
+  --background-task: var(--background);
 }
 
 * {
@@ -18,6 +33,8 @@
 button {
   border: none;
   transition: all 0.3s ease;
+
+  background-color: var(--accent);
 
   &:hover {
     cursor: pointer;
@@ -44,19 +61,4 @@ button {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #f9fcf7;
-    --background: #080d06;
-    --primary: #64c345;
-    --secondary: #ace49a;
-    --accent: #84dd67;
-    --background-task: 38, 30, 30;
-  }
-  html {
-    color-scheme: dark;
-  }
 }
