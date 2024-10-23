@@ -6,10 +6,10 @@
     gap: 16px;
     padding: 16px;
     border-radius: 4px;
-    background-color: var(--gray-alpha-100);
+    background-color: rgba(var( --background-task), 0.95);
 
     &:hover {
-        background: var(--button-primary-hover);
+        background: rgba(var( --background-task), 0.8);
     }
 
     &_left {
@@ -103,8 +103,3 @@
     }
 }
 
-@media (prefers-color-scheme: dark) {
-    .task-item {
-        background-color: var(--gray-alpha-200);
-    }
-}
