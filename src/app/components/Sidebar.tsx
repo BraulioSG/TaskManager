@@ -1,8 +1,11 @@
-import {useEffect, useState} from "react";
-import {getPreferredTheme, getTaskLists, saveNewTaskList} from "@/app/utils/Storage";
-import {TaskList} from "@/app/Models/Task";
+import { useEffect, useState } from "react";
+import { getPreferredTheme, getTaskLists, saveNewTaskList } from "@/app/utils/Storage";
+import { TaskList } from "@/app/Models/Task";
 
-export default function Sidebar(){
+import "./Sidebar.scss"
+import { TfiArrowCircleLeft } from "react-icons/tfi";
+
+export default function Sidebar() {
 
     const [lists, setLists] = useState<TaskList[]>([]);
 
@@ -21,15 +24,29 @@ export default function Sidebar(){
 
     return (
         <aside className="sidebar">
-            <h2>My Lists</h2>
-            {lists.map((list, index) => {
-                return (
-                    <button key={`${list.getName()}-${index}`}>
-                        <h3>{list.getName()}</h3>
-                    </button>
-                );
-            })}
-            <button onClick={handleNewlist}>New List</button>
+            <div className="sidebar-top">
+
+                <h2>My Lists</h2>
+                <button>
+
+                    <TfiArrowCircleLeft />
+                </button>
+            </div>
+            <div className="lists-container">
+                {lists.map((list, index) => {
+                    const { pending, completed } = list.getTasks();
+                    return (
+                        <button key={`${list.getName()}-${index}`} className="list-btn">
+                            <h3>{list.getName()}</h3>
+                            <em>
+                                {pending.length} pending <br />
+                                {completed.length} completed
+                            </em>
+                        </button>
+                    );
+                })}
+            </div>
+            <button onClick={handleNewlist} className="newListBtn">New List</button>
         </aside>
     )
 }

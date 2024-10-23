@@ -1,0 +1,110 @@
+.sidebar{
+  position: fixed;
+  left: 10px;
+  top: 50%;
+  translate: 0 -50%;
+
+  width: 300px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(5px);
+  color: black;
+  border-radius: 10px;
+
+  z-index: 100;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  transition: 0.3s ease;
+
+  .sidebar-top{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h2{
+      width: 100%;
+    }
+
+    button{
+      svg{
+        transform: scale(1.5);
+        stroke-width: 0.1;
+        
+      }
+      border: none;
+      background: transparent;
+      color: black;
+    }
+  }
+
+
+  .lists-container{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    max-height: 500px;
+    overflow-y: auto;
+    border-radius: 5px;
+
+    .list-btn{
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+
+      background-color: rgba(0, 0, 0, 0.05);
+      color: black;
+
+      min-height: 75px;
+      max-height: 75px;
+
+      
+      text-align: left;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      &:hover{
+        background-color: #84dd6755;
+      }
+
+      h3{
+        font-weight: 600;
+      }
+      
+    }
+  }
+
+  .newListBtn{
+    padding: 10px;
+    border-radius: 5px;
+
+    background-color: var(--primary);
+    color: black;
+    font-weight: bold;
+
+    &:hover{
+      background-color: darken($color: #64c345, $amount: 10);
+    }
+  }
+
+}
+
+@media only screen and (max-width: 600px) {
+  .sidebar {
+    width: 100%;
+    left: 0;
+    border-radius: 0;
+    height: 100%;
+
+    .lists-container{
+      height: 100%;
+    }
+  }
+}
