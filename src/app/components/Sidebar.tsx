@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPreferredTheme, getTaskLists, saveNewTaskList } from "@/app/utils/Storage";
+import { getTaskLists, saveNewTaskList } from "@/app/utils/Storage";
 import { TaskList } from "@/app/Models/Task";
 
 import "./Sidebar.scss"

@@ -1,4 +1,3 @@
-import {DefaultThemes, Theme} from "@/app/Models/Themes";
 import {Task, TaskList} from "@/app/Models/Task";
 
 const LOCAL_STORAGE_PREFIX = "tm";
@@ -9,21 +8,21 @@ enum localstorage_keys {
 }
 
 //THEMES
-function getSystemTheme(): Theme{
-    let preferredTheme: string;
+function getSystemTheme(): 'dark' | 'light' {
+    let preferredTheme: 'dark' | 'light';
     if(window.matchMedia !== undefined){ //if browser support matchMedia
 
         //Assign the system preferred theme
-        preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? DefaultThemes.DARK.toString() : DefaultThemes.LIGHT.toString();
+        preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     else{
-        preferredTheme = DefaultThemes.LIGHT.toString();
+        preferredTheme = 'light';
     }
 
-    return Theme.parseTheme(preferredTheme);
+    return preferredTheme;
 }
 
-export function getPreferredTheme(): Theme{
+export function getPreferredTheme(): 'dark'| 'light'{
     const preferredTheme = localStorage.getItem(localstorage_keys.THEME);
 
 
@@ -34,21 +33,12 @@ export function getPreferredTheme(): Theme{
         return newTheme;
     }
 
-    try{
-        const theme: Theme = Theme.parseTheme(preferredTheme);
-        setPreferredTheme(theme);
-        return theme;
-    }catch(_){
-        const newTheme = getSystemTheme();
-
-        setPreferredTheme(newTheme);
-        return newTheme;
-    }
-
+    return preferredTheme as 'dark' | 'light'
+    
 }
 
-export function setPreferredTheme(theme: Theme): void{
-    localStorage.setItem(localstorage_keys.THEME, theme.toString());
+export function setPreferredTheme(theme: 'light' | 'dark'): void{
+    localStorage.setItem(localstorage_keys.THEME, theme);
 }
 
 
