@@ -1,27 +1,20 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./tasksContainer.scss";
 import TaskDetails from "./TaskDetails";
 import { Task, TaskList } from "@/app/Models/Task";
 import TaskItem from "./taskItem";
+import { ListsContext, ActiveListContext } from "./page";
 
 export default function TasksContainer() {
-    const [tasks, setTasks] = useState <TaskList>(
-        new TaskList("Tasks")
-    );
+    const [tasks, setTasks] = useState <TaskList>();
+
+    const lists = useContext(ListsContext);
+    const activeIdx = useContext(ActiveListContext);
 
     useEffect(() => {
-        const initialTasks = new TaskList("Tasks");
-        initialTasks.addTask(new Task("First Task", "Description 1", "2022-01-01"));
-        initialTasks.addTask(new Task("Second Task", "Description 2", "2022-01-02"));
-        initialTasks.addTask(new Task("Third Task", "Description 3", "2022-01-03"));
-        initialTasks.addTask(new Task("Third Task", "Description 3", "2022-01-03"));
-        initialTasks.addTask(new Task("Third Task", "Description 3", "2022-01-03"));
-        initialTasks.addTask(new Task("Third Task", "Description 3", "2022-01-03"));
-        initialTasks.addTask(new Task("Third Task", "Description 3", "2022-01-03"));
-
-        setTasks(initialTasks);
-    }, []);
+        setTasks(lists[activeIdx]);
+    }, [activeIdx, lists]);
 
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     return (
