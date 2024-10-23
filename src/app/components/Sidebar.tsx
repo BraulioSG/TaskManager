@@ -63,9 +63,7 @@ export default function Sidebar() {
                         <button
                             key={`${list.getName()}-${index}`}
                             className={`list-btn ${index === activeIdx ? "activeList" : ""}`}
-                            onClick={() => {
-                                if (index < 10) setActiveIdx(index)
-                            }}
+                            onClick={() => setActiveIdx(index)}
                         >
                             {index < 10 && <span className="key-to-press">{(index + 1) % 10}</span>}
                             <h3>{list.getName()}</h3>
