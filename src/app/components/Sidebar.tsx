@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getPreferredTheme, getTaskLists, saveNewTaskList } from "@/app/utils/Storage";
 import { TaskList } from "@/app/Models/Task";
 
 import "./Sidebar.scss"
 import { TfiArrowCircleLeft, TfiPlus } from "react-icons/tfi";
+import { ActiveListContext, ListsContext } from "../page";
 
 
-export default function Sidebar() {
-
-    const [lists, setLists] = useState<TaskList[]>([]);
-    const [activeIdx, setActiveIdx] = useState<number>(0);
+//@ts-ignore
+export default function Sidebar({ setLists, setActiveIdx }) {
+    const lists = useContext(ListsContext);
+    const activeIdx = useContext(ActiveListContext);
     const [isOnFocus, setIsOnFocus] = useState<boolean>(true);
 
 

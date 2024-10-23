@@ -24,8 +24,8 @@ export default function Home() {
     <ListsContext.Provider value={lists}>
       <ActiveListContext.Provider value={activeIdx}>
         <div className={"main-container"}>
-          <Sidebar />
-          <TasksContainer />
+          <Sidebar setLists={setLists} setActiveIdx={setActiveIdx} />
+          <TasksContainer setLists={setLists} />
         </div>
       </ActiveListContext.Provider>
     </ListsContext.Provider>
