@@ -6,7 +6,7 @@
     gap: 16px;
     padding: 16px;
     border-radius: 4px;
-    background: var(--gray-alpha-200);
+    background-color: var(--gray-alpha-100);
 
     &:hover {
         background: var(--button-primary-hover);
@@ -27,6 +27,7 @@
     &_title {
         display: flex;
         align-items: center;
+        color: var(--text);
     }
 
     &_title h3 {
@@ -99,5 +100,11 @@
 
     &_important:checked + .important-label .checked {
         display: block;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .task-item {
+        background-color: var(--gray-alpha-200);
     }
 }
