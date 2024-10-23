@@ -1,6 +1,9 @@
+import { generateID } from "../utils/Tools";
+
 const DATE_FORMAT = new RegExp('^[0-3][0-9]-[0-1][0-9]-[2-9][0-9][0-9][0-9]$');
 
 export class Task{
+    private id: string              = ""
     private title: string           = "";
     private description: string     = "";
     private dueDate: string         = "";
@@ -12,8 +15,10 @@ export class Task{
 
     constructor(title: string, description: string, dueDate: string) {
         this.setTitle(title);
-        this. setDescription(description);
+        this.setDescription(description);
         this.setDueDate(dueDate);
+
+        this.id = generateID(title);
     }
 
     public toString(): string {
@@ -64,14 +69,18 @@ export class Task{
     public isCompleted(): boolean { return this.completed; }
 
     public isImportant(): boolean { return this.important; }
+
+    public getId(): string { return this.id }
 }
 
 export class TaskList {
+    private id: string      = "";
     private name: string    = "";
     private tasks: Task[]   = [];
 
     constructor(name: string) {
         this.setName(name);
+        this.id = generateID(name);
     }
 
     public addTask(task: Task) : void {
@@ -100,6 +109,8 @@ export class TaskList {
     //SETTERS
     public setName(name: string) { this.name = name; }
 
+    public setTasks(tasks: Task[]) { this.tasks = tasks }
+
     //GETTERS
     public getName(): string { return this.name; }
 
@@ -125,5 +136,9 @@ export class TaskList {
         }
 
         return { pending , completed };
+    }
+
+    public getId(){
+        return this.id;
     }
 }

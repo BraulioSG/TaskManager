@@ -21,12 +21,15 @@ export default function Sidebar({ setLists, setActiveIdx }) {
     const handleNewlist = () => {
         const input = document.querySelector("#newListInput") as HTMLInputElement;
 
+        if (input.value.trim().length <= 0) return;
+
         const newList = new TaskList(input.value);
 
         input.value = "";
 
         setLists(saveNewTaskList(newList));
     }
+
 
     const handleKeyPressed = (event: any) => {
         if (isOnFocus) return;
