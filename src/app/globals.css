@@ -1,12 +1,3 @@
-:root {
-  --text: #080d06;
-  --background: #f9fcf7;
-  --primary: #64c345;
-  --secondary: #ace49a;
-  --accent: #84dd67;
-  --background-task: 249, 252, 247;
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -17,16 +8,11 @@
 
 button {
   border: none;
-  transition: all 0.3s ease;
-
-  &:hover {
-    cursor: pointer;
-  }
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 1px;
+  width: 5px;
 }
 
 /* Track */
@@ -48,14 +34,6 @@ button {
 
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --text: #f9fcf7;
-    --background: #080d06;
-    --primary: #64c345;
-    --secondary: #ace49a;
-    --accent: #84dd67;
-    --background-task: 38, 30, 30;
-  }
   html {
     color-scheme: dark;
   }
