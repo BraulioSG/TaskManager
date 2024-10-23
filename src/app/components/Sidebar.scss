@@ -1,8 +1,7 @@
 .sidebar{
   position: fixed;
   left: 10px;
-  top: 50%;
-  translate: 0 -50%;
+  top: 10%;
 
   width: 300px;
   padding: 10px;
@@ -85,12 +84,17 @@
 
       h3{
         font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .key-to-press{
         $key-size: 30px;
-        width: $key-size;
-        height: $key-size;
+        min-width: $key-size;
+        max-width: $key-size;
+        min-height: $key-size;
+        max-height: $key-size;
         
         display: grid;
         place-content: center;
