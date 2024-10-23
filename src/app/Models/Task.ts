@@ -3,7 +3,7 @@ import { generateID } from "../utils/Tools";
 const DATE_FORMAT = new RegExp('^[0-3][0-9]-[0-1][0-9]-[2-9][0-9][0-9][0-9]$');
 
 export class Task{
-    private id: string              = ""
+    public id: string              = ""
     private title: string           = "";
     private description: string     = "";
     private dueDate: string         = "";
@@ -33,8 +33,9 @@ export class Task{
     }
 
     public static parse(str: Task): Task {
-        const {title, description, dueDate, imageUrl, completed, important} = JSON.parse(str) as Task;
+        const {id, title, description, dueDate, imageUrl, completed, important} = JSON.parse(str) as Task;
         const task = new Task(title, description, dueDate);
+        task.id = id;
 
         task.setImageUrl(imageUrl);
         task.setCompleted(completed);
@@ -74,7 +75,7 @@ export class Task{
 }
 
 export class TaskList {
-    private id: string      = "";
+    public id: string      = "";
     private name: string    = "";
     private tasks: Task[]   = [];
 
@@ -88,9 +89,10 @@ export class TaskList {
     }
 
     public static parse(str: string): TaskList {
-        const {name, tasks}  =JSON.parse(str) as TaskList;
+        const {id, name, tasks}  =JSON.parse(str) as TaskList;
 
         const list = new TaskList(name);
+        list.id = id;
 
         tasks.forEach(task => {
             list.addTask(Task.parse(task));

@@ -68,3 +68,14 @@ export function saveNewTaskList(list: TaskList): TaskList[]{
 
     return lists;
 }
+
+export function deleteTaskList(id: string): TaskList[]{
+    let lists = getTaskLists();
+
+    lists = lists.filter(list => {
+        console.table({id, v: list.getId()})
+        return list.getId() !== id;
+    });
+    setTaskLists(lists);
+    return getTaskLists();
+}

@@ -30,10 +30,12 @@ export default function Home() {
   return (
     <ListsContext.Provider value={lists}>
       <ActiveListContext.Provider value={activeIdx}>
+        {/* @ts-ignore */}
         <ThemeContext.Provider value={theme}>
           <div className={"main-container"}>
             <ThemeToggler setTheme={setTheme} />
             <Sidebar setLists={setLists} setActiveIdx={setActiveIdx} />
+            {/* @ts-ignore */}
             <TasksContainer setLists={setLists} />
           </div>
         </ThemeContext.Provider>

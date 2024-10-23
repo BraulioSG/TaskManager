@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { getPreferredTheme, getTaskLists, saveNewTaskList } from "@/app/utils/Storage";
+import { deleteTaskList, getTaskLists, saveNewTaskList } from "@/app/utils/Storage";
 import { TaskList } from "@/app/Models/Task";
 
 import "./Sidebar.scss"
-import { TfiArrowCircleLeft, TfiPlus } from "react-icons/tfi";
+import { TfiArrowCircleLeft, TfiPlus, TfiTrash } from "react-icons/tfi";
 import { ActiveListContext, ListsContext } from "../page";
 
 
@@ -12,11 +12,6 @@ export default function Sidebar({ setLists, setActiveIdx }) {
     const lists = useContext(ListsContext);
     const activeIdx = useContext(ActiveListContext);
     const [isOnFocus, setIsOnFocus] = useState<boolean>(true);
-
-    //TESTING THE STORAGE
-    useEffect(() => {
-        setLists(getTaskLists());
-    }, []);
 
     const handleNewlist = () => {
         const input = document.querySelector("#newListInput") as HTMLInputElement;
@@ -29,6 +24,12 @@ export default function Sidebar({ setLists, setActiveIdx }) {
 
         setLists(saveNewTaskList(newList));
     }
+
+    const handleDeleteList = (id: string) => {
+        setLists(deleteTaskList(id));
+    }
+
+    console.log(lists)
 
 
     const handleKeyPressed = (event: any) => {
@@ -54,21 +55,23 @@ export default function Sidebar({ setLists, setActiveIdx }) {
 
                 <h2>My Lists</h2>
                 <button>
-
                     <TfiArrowCircleLeft />
                 </button>
             </div>
             <div className="lists-container">
                 {lists.map((list, index) => {
                     return (
-                        <button
+                        <a
                             key={`${list.getName()}-${index}`}
                             className={`list-btn ${index === activeIdx ? "activeList" : ""}`}
                             onClick={() => setActiveIdx(index)}
                         >
                             {index < 10 && <span className="key-to-press">{(index + 1) % 10}</span>}
                             <h3>{list.getName()}</h3>
-                        </button>
+                            <button className="delete-btn" onClick={() => handleDeleteList(list.getId())}>
+                                <TfiTrash />
+                            </button>
+                        </a>
                     );
                 })}
             </div>

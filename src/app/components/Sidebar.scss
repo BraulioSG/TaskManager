@@ -77,6 +77,11 @@
         .key-to-press{
           border-color: rgb(var(--button-fg));
         }
+
+        .delete-btn{
+          opacity: 0.5;
+        }
+        
       }
 
       &.activeList{
@@ -85,6 +90,7 @@
         .key-to-press{
           border-color: rgb(var(--button-bg));
         }
+
       }
 
       h3{
@@ -92,10 +98,11 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        width: 100%;
       }
 
+      $key-size: 30px;
       .key-to-press{
-        $key-size: 30px;
         min-width: $key-size;
         max-width: $key-size;
         min-height: $key-size;
@@ -106,6 +113,33 @@
         border-radius: 3px;
         border: 2px solid grey;
         font-weight: bold;
+      }
+
+      .delete-btn{
+        min-width: $key-size;
+        max-width: $key-size;
+        min-height: $key-size;
+        max-height: $key-size;
+        background-color: #fcc7;
+        border-radius: 3px;
+        display: grid;
+        place-content: center;
+        border: 2px solid red;
+
+        opacity: 0;
+
+        &:hover{
+          background-color: red;
+          svg{
+            color: white;
+          }
+        }
+
+        svg{
+          transform: scale(1.5);
+          color: red;
+          
+        }
       }
       
     }
@@ -150,14 +184,22 @@
     }
 
     input{
-      background-color: var(--background);
-      color: var(--foreground);
+      background-color: rgb(var(--background));
+      color: rgb(var(--foreground));
       border: none;
       padding: 10px;
       outline: none;
       border-radius: 5px;
       width: 100%;
+
+      border-bottom: 3px solid rgb(var(--accent));
+
+      &::placeholder{
+        color: rgb(var(--foreground));
+      }
     }
+
+    
 
   }
   
@@ -168,15 +210,20 @@
   .sidebar {
     width: 100%;
     left: 0;
+    top: 0;
     border-radius: 0;
     height: 100%;
 
     .lists-container{
-      height: 100%;
+      max-height: 100%;
 
       .list-btn{
         .key-to-press{
           display: none;
+        }
+
+        .delete-btn{
+          opacity: 0.5;
         }
       }
     }
