@@ -56,9 +56,10 @@ export function getTaskLists(): TaskList[]{
     return parsedList.map((list: string) => TaskList.parse(list));
 }
 
-export function setTaskLists(taskLists: TaskList[]): void{
+export function setTaskLists(taskLists: TaskList[]): TaskList[] {
     const convertedToString: string[] = taskLists.map(list => list.toString());
     localStorage.setItem(localstorage_keys.LISTS, JSON.stringify(convertedToString));
+    return getTaskLists();
 }
 
 export function saveNewTaskList(list: TaskList): TaskList[]{
