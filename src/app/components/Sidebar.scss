@@ -53,16 +53,17 @@
     .list-btn{
       border-radius: 5px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
+  
+      justify-content: flex-start;
+      align-items: center;
       padding: 20px;
+      gap: 10px;
 
       background-color: rgba(0, 0, 0, 0.05);
       color: black;
 
-      min-height: 75px;
-      max-height: 75px;
+      padding: 10px;
+      min-height: 50px;
 
       
       text-align: left;
@@ -74,25 +75,82 @@
         background-color: #84dd6755;
       }
 
+      &.activeList{
+        background-color: #b0e29f;
+        color: var(--primary);
+        .key-to-press{
+          border-color: var(--primary);
+        }
+      }
+
       h3{
         font-weight: 600;
+      }
+
+      .key-to-press{
+        $key-size: 30px;
+        width: $key-size;
+        height: $key-size;
+        
+        display: grid;
+        place-content: center;
+        border-radius: 3px;
+        border: 2px solid grey;
+        font-weight: bold;
       }
       
     }
   }
+  .newList{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    .newListBtn{
+      padding: 10px;
+      border-radius: 5px;
+  
+      background-color: var(--primary);
+      color: black;
+      font-weight: bold;
 
-  .newListBtn{
-    padding: 10px;
-    border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
 
-    background-color: var(--primary);
-    color: black;
-    font-weight: bold;
+      width: 40px;
+      height: 40px;
 
-    &:hover{
-      background-color: darken($color: #64c345, $amount: 10);
+      .icon{
+        display: grid;
+        place-content: center;
+        svg{
+          stroke-width: 1;
+        }
+
+      }
+
+      .text{
+        display: none;
+      }
+  
+      &:hover{
+        background-color: darken($color: #64c345, $amount: 10);
+      }
     }
+
+    input{
+      background-color: var(--background);
+      color: var(--foreground);
+      border: none;
+      padding: 10px;
+      outline: none;
+      border-radius: 5px;
+      width: 100%;
+    }
+
   }
+  
 
 }
 
@@ -105,6 +163,23 @@
 
     .lists-container{
       height: 100%;
+
+      .list-btn{
+        .key-to-press{
+          display: none;
+        }
+      }
+    }
+
+    .newList{
+      flex-direction: column;
+      .newListBtn{
+        width: 100%;
+        .text{
+          display:block;
+        }
+      }
     }
   }
+  
 }
