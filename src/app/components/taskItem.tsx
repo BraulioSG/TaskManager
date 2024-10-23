@@ -1,18 +1,12 @@
 import "./taskItem.scss";
-export interface TaskItemProps {
-      id: number;
-      title: string;
-      description: string;
-      important: boolean;
-      completed: boolean;
-  }
-export default function TaskItem(task : TaskItemProps) { 
+import { Task } from "@/app/Models/Task";
+export default function TaskItem({task}: {task: Task}) {
     return (
         <div className="task-item">
             <div className="task-item_left">
                 <input type="checkbox" className="task-item_checkbox" onClick={(e) => {e.stopPropagation()}}/>
                 <div className="task-item_title">
-                    <h3>{task.title}</h3>
+                    <h3>{task.getTitle()}</h3>
                 </div>
             </div>
             <div className="task-item_right">
