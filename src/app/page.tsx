@@ -1,11 +1,12 @@
 "use client"
-import styles from "./page.module.css";
 import TasksContainer from "./components/tasksContainer";
 import Sidebar from "@/app/components/Sidebar";
 
+import "./page.scss"
+
 export default function Home() {
   return (
-    <div className={styles.page}>
+    <div className={"main-container"}>
         <Sidebar />
         <TasksContainer />
     </div>
