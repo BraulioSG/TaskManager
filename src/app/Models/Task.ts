@@ -8,7 +8,7 @@ export class Task{
     private imageUrl: string | null = null;
 
     private completed: boolean      = false;
-    private important: boolean    = false;
+    private important: boolean      = false;
 
     constructor(title: string, description: string, dueDate: string) {
         this.setTitle(title);
@@ -47,7 +47,7 @@ export class Task{
 
     public setImageUrl(imageUrl: string | null) { this.imageUrl = imageUrl; }
 
-    public setCompleted(status: boolean){ this.setCompleted(status); }
+    public setCompleted(status: boolean){ this.completed = status; }
 
     public setIsImportant(isImportant: boolean) { this.important = isImportant; }
 
@@ -63,7 +63,7 @@ export class Task{
 
     public isCompleted(): boolean { return this.completed; }
 
-    public isImportant(): boolean { return this.isImportant; }
+    public isImportant(): boolean { return this.important; }
 }
 
 export class TaskList {
