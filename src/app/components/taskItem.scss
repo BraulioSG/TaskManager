@@ -6,6 +6,11 @@
     border-radius: 4px;
     background-color: rgba(var( --background-task), 0.95);
 
+    animation: appear 0.5s linear;
+
+    transition: all 0.3s ease;
+    animation-fill-mode: backwards;
+
     &:hover {
         background: rgba(var( --background-task), 0.8);
         cursor: pointer;
@@ -13,11 +18,18 @@
 
     &_title {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-start;
         color: var(--text);
 
         width: 100%;
         height: 50px;
+
+        &-top{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
     }
     &-checkbox{
         display: grid;
@@ -41,8 +53,8 @@
         transition: all 0.3s ease;
 
         &:checked {
-            background-color: #6e7eea;
-            border-color: #6e7eea;
+            background-color: gold;
+            border-color: gold;
         }
 
         &::after {
@@ -86,7 +98,7 @@
     }
 
     .checked {
-        background-color: #6e7eea;
+        background-color: gold;
         display: none;
     }
 
@@ -100,9 +112,26 @@
 }
 
 .completed{
+    filter: grayscale(1);
+    backdrop-filter: blur(5px);
+    background-color: rgba(var( --background-task), 0.1);
+
+    &:hover{
+        background-color: rgba(var( --background-task), 0.3);
+    }
     h3{
         text-decoration: line-through;
         font-style: italic;
     }
 }
 
+@keyframes appear {
+    from{
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

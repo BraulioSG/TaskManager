@@ -26,6 +26,7 @@ export default function Sidebar() {
 
         input.value = "";
 
+        setShowSideBar(false);
         setLists(saveNewTaskList(newList));
     }
 

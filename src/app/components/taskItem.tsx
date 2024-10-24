@@ -25,7 +25,7 @@ export default function TaskItem({ task, setSelectedTask }: TaskItemProps) {
         const newLists = [...lists];
         task.setCompleted(!task.isCompleted())
         newLists[activeIdx].editTask(task.getId(), task)
-
+        setTaskLists(newLists);
         setLists(newLists);
     };
 
@@ -33,7 +33,7 @@ export default function TaskItem({ task, setSelectedTask }: TaskItemProps) {
         const newLists = [...lists];
         task.setIsImportant(!task.isImportant())
         newLists[activeIdx].editTask(task.getId(), task)
-
+        setTaskLists(newLists);
         setLists(newLists);
     }
 
@@ -52,22 +52,23 @@ export default function TaskItem({ task, setSelectedTask }: TaskItemProps) {
                 />
             </div>
             <div className="task-item_title" onClick={() => { handleSelectedTask() }}>
-                <h3>{task.getTitle()}</h3>
+                <div className="task-item_title-top"><h3>{task.getTitle()}</h3> <span>{task.getDueDate()}</span></div>
+                <p>{task.getDescription()}</p>
             </div>
             <div className="task-item-checkbox">
                 <input
-                type="checkbox"
-                id={importantId} 
-                className="task-item_important"
-                onChange={(e) => {
-                    e.stopPropagation();
-                    handleImportantChange();
-                }}
-                checked={task.isImportant()}
+                    type="checkbox"
+                    id={importantId}
+                    className="task-item_important"
+                    onChange={(e) => {
+                        e.stopPropagation();
+                        handleImportantChange();
+                    }}
+                    checked={task.isImportant()}
                 />
                 <label htmlFor={importantId} className="important-label">
-                <div className="star unchecked"></div>
-                <div className="star checked"></div>
+                    <div className="star unchecked"></div>
+                    <div className="star checked"></div>
                 </label>
             </div>
         </div>

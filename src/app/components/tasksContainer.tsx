@@ -17,17 +17,11 @@ export default function TasksContainer() {
     const { lists, setLists } = useContext(ListsContext);
     const { activeIdx } = useContext(ActiveListContext);
 
-    const updateTask = (updatedTask: Task) => {
-        console.log("task update");
-        if (lists) {
-            lists[activeIdx].editTask(updatedTask.getId(), updatedTask);
-            setTaskLists(lists);
-            setLists(lists);
-        }
-    };
-
     useEffect(() => {
-        console.log("lists updated")
+        Array.from(document.querySelectorAll(".task-item")).forEach((el, idx) => {
+            const e = el as HTMLElement;
+            e.style.animationDelay = `${idx * 0.01}s`;
+        })
     }, [lists, activeIdx])
 
     const updateList = () => {
@@ -97,6 +91,7 @@ export default function TasksContainer() {
                         }}
                         disabled={lists.length <= 0}
                     />
+                    <button className="add-btn" onClick={updateList}>Add</button>
                 </div>
             </div>
             <aside className={`sidebar-details ${selectedTask ? "show" : ""}`}>
