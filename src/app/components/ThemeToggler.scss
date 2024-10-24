@@ -1,7 +1,49 @@
 .ThemeToggler{
-    position: absolute;
-    top: 10px;
-    right: 50px;
-    z-index: 1000;
-    padding: 10px;
+
+    $size: 20px;
+    width: calc($size * 2);
+    height: $size;
+    border-radius: $size;
+
+    position: relative;
+    
+
+    span{
+        position: absolute;
+        top: 50%;
+        left: 0;
+        translate: -25% -50%;
+        display: grid;
+        place-content: center;
+
+
+        height: calc($size + 10px);
+        width: calc($size + 10px);
+        background-color: white;
+        border-radius: 50%;
+
+        transition: all 0.5s ease;
+
+        svg{
+
+        }
+    }
+
+    &.light{
+        background-color: rgb(var(--primary));
+        span{
+            right: 0;
+            translate: 50% -50%;
+            rotate: 180deg;
+        }
+        
+    }
+
+    &.dark{
+        background-color: rgb(var(--dark-primary));
+        span{
+            left: 0;
+            translate: -25% -50%;
+        }
+    }
 }

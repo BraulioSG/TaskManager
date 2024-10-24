@@ -7,8 +7,7 @@ import { getPreferredTheme, getTaskLists } from "@/app/utils/Storage";
 
 import TasksContainer from "./components/tasksContainer";
 import Sidebar from "@/app/components/Sidebar";
-import ThemeToggler from "./components/ThemeToggler";
-
+import Toolbar from "./components/Toolbar";
 
 //Contexts
 export const ListsContext = createContext([new TaskList("")])
@@ -33,7 +32,7 @@ export default function Home() {
         {/* @ts-ignore */}
         <ThemeContext.Provider value={theme}>
           <div className={"main-container"}>
-            <ThemeToggler setTheme={setTheme} />
+            <Toolbar setTheme={setTheme} />
             <Sidebar setLists={setLists} setActiveIdx={setActiveIdx} />
             {/* @ts-ignore */}
             <TasksContainer setLists={setLists} />

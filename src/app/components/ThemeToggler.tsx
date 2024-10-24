@@ -1,6 +1,11 @@
-import { useContext } from "react"
 import "./ThemeToggler.scss"
+
+import { useContext } from "react"
 import { ThemeContext } from "../page";
+
+import { TiWeatherNight, TiWeatherSunny } from "react-icons/ti";
+
+
 
 export default function ThemeToggler({ setTheme }: any) {
     const theme = useContext(ThemeContext);
@@ -11,6 +16,11 @@ export default function ThemeToggler({ setTheme }: any) {
         })
     }
     return (
-        <button className="ThemeToggler" onClick={handleToggleTheme}>{theme} mode</button>
+        <button className={`ThemeToggler ${theme}`} onClick={handleToggleTheme}>
+            <span>
+                {theme === "dark" && <TiWeatherNight />}
+                {theme === "light" && <TiWeatherSunny />}
+            </span>
+        </button>
     )
 }

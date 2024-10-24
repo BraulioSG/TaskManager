@@ -6,6 +6,8 @@
   --secondary: 172, 228, 154;
   --accent: 132, 221, 103;
 
+  --dark-primary: 50, 145, 19;
+
   --button-bg: var(--accent);
   --button-fg: 0, 0, 0;
 
