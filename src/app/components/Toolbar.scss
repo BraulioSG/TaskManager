@@ -1,0 +1,10 @@
+.Toolbar{
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    z-index: 1000;
+    padding: 10px;
+
+    display: flex;
+    align-items: center;
+}
