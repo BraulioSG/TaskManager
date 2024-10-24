@@ -34,7 +34,10 @@ export default function Sidebar({ setLists, setActiveIdx }) {
     document.documentElement.addEventListener("keydown", (event: any) => {
 
         if (document.activeElement?.tagName === "INPUT") {
-            if (event.key === "Enter" && document.activeElement.id === "newListInput") handleNewlist();
+            if (event.key === "Enter" && document.activeElement.id === "newListInput") {
+                handleNewlist();
+                setActiveIdx(lists.length);
+            }
             return;
         }
 
@@ -72,13 +75,11 @@ export default function Sidebar({ setLists, setActiveIdx }) {
                 <div className="lists-container">
                     {lists.map((list, index) => {
                         return (
-                            <a
-                                key={`${list.getName()}-${index}`}
-                                className={`list-btn ${index === activeIdx ? "activeList" : ""}`}
-                                onClick={() => setActiveIdx(index)}
-                            >
-                                {index < 10 && <span className="key-to-press">{(index + 1) % 10}</span>}
-                                <h3>{list.getName()}</h3>
+                            <a key={`${list.getName()}-${index}`} className={`list-btn ${index === activeIdx ? "activeList" : ""}`}>
+                                <button onClick={() => { setActiveIdx(index); setShowSideBar(false) }} >
+                                    {index < 10 && <span className="key-to-press">{(index + 1) % 10}</span>}
+                                    <h3>{list.getName()}</h3>
+                                </button>
                                 <button className="delete-btn" onClick={() => handleDeleteList(list.getId())}>
                                     <TfiTrash />
                                 </button>

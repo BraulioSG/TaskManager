@@ -5,6 +5,26 @@
     z-index: 40;
     padding: 10px;
 
+
+
+
     display: flex;
     align-items: center;
+    gap: 20px;
+
+    .changeBg{
+        background-color: rgba(var(--button-bg), 0.5);
+        color: rgba(var(--button-fg), 1);
+        padding: 5px 10px;
+        border-radius: 5px;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .Toolbar{
+        .changeBg{
+            display: none;
+        }
+    }
 }

@@ -2,6 +2,8 @@
 
     $size: 20px;
     width: calc($size * 2);
+    min-width: calc($size * 2);
+    max-width: calc($size * 2);
     height: $size;
     border-radius: $size;
 

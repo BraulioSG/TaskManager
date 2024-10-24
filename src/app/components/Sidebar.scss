@@ -60,7 +60,6 @@
       gap: 10px;
 
       background-color: rgba(0, 0, 0, 0.05);
-      color: var(--text);
 
       padding: 10px;
       min-height: 50px;
@@ -71,13 +70,63 @@
       white-space: nowrap;
       text-overflow: ellipsis;
 
-      &:hover{
-        background-color: rgba(var(--button-bg), 0.1);
-        color: rgb(var(--button-fg));
+      $key-size: 30px;
+
+
+      & button:first-child{
+        width: 100%;
+        display: flex;
+  
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+
+
+        h3{
+          font-weight: 600;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          width: 100%;
+          text-align: start;
+          color: var(--text);
+
+        }
 
         .key-to-press{
-          border-color: rgb(var(--button-fg));
+          min-width: $key-size;
+          max-width: $key-size;
+          min-height: $key-size;
+          max-height: $key-size;
+          
+          display: grid;
+          place-content: center;
+          border-radius: 3px;
+          border: 2px solid grey;
+          font-weight: bold;
+          color: grey;
+
         }
+
+      }
+
+      &:hover{
+        background-color: rgba(var(--button-bg), 0.1);
+        
+        & button:first-child{
+          h3{
+
+            color: rgb(var(--button-fg));
+          }
+
+          .key-to-press{
+            border-color: rgb(var(--button-fg));
+            color: rgb(var(--button-fg));
+
+          }
+
+        }
+        
 
         .delete-btn{
           opacity: 0.5;
@@ -87,35 +136,25 @@
 
       &.activeList{
         background-color: rgba(var(--button-bg), 0.3);
-        color: rgb(var(--button-bg));
-        .key-to-press{
-          border-color: rgb(var(--button-bg));
+
+        & button:first-child{
+          h3{
+            color: rgb(var(--button-bg));
+
+          }
+          .key-to-press{
+            border-color: rgb(var(--button-bg));
+            color: rgb(var(--button-bg));
+
+          }
         }
-
-      }
-
-      h3{
-        font-weight: 600;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 100%;
-      }
-
-      $key-size: 30px;
-      .key-to-press{
-        min-width: $key-size;
-        max-width: $key-size;
-        min-height: $key-size;
-        max-height: $key-size;
         
-        display: grid;
-        place-content: center;
-        border-radius: 3px;
-        border: 2px solid grey;
-        font-weight: bold;
+
       }
 
+      
+
+      
       .delete-btn{
         min-width: $key-size;
         max-width: $key-size;

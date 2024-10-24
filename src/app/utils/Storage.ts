@@ -5,6 +5,7 @@ const LOCAL_STORAGE_PREFIX = "tm";
 enum localstorage_keys {
     THEME = `${LOCAL_STORAGE_PREFIX}_THEME`,
     LISTS = `${LOCAL_STORAGE_PREFIX}_LISTS`,
+    BACKGROUND = `${LOCAL_STORAGE_PREFIX}_BACKGROUND`,
 }
 
 //THEMES
@@ -78,4 +79,25 @@ export function deleteTaskList(id: string): TaskList[]{
     });
     setTaskLists(lists);
     return getTaskLists();
+}
+
+//background
+
+export function getBackground(): string{
+    const background = localStorage.getItem(localstorage_keys.BACKGROUND);
+
+
+    if(!background){ //if there is not preferred theme in the local storage
+        const newBg = "https://images.unsplash.com/photo-1489914099268-1dad649f76bf?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
+        setBackground(newBg);
+        return newBg;
+    }
+
+    return background;
+    
+}
+
+export function setBackground(background: string): void{
+    localStorage.setItem(localstorage_keys.BACKGROUND, background);
 }
