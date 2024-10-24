@@ -1,37 +1,63 @@
+import { useContext, useEffect, useState } from "react";
 import "./taskItem.scss";
 import { Task } from "@/app/Models/Task";
+import { ActiveListContext, ListsContext } from "../page";
+import { setTaskLists } from "../utils/Storage";
 
-export default function TaskItem({ task, updateTask, }: { task: Task; updateTask: (task: Task) => void; }) {
+interface TaskItemProps {
+    task: Task;
+    setSelectedTask: any
+}
+
+export default function TaskItem({ task, setSelectedTask }: TaskItemProps) {
+    const { lists, setLists } = useContext(ListsContext);
+    const { activeIdx } = useContext(ActiveListContext);
+    const [currentTask] = useState<Task>(task);
+
+    useEffect(() => {
+
+    }, [lists, currentTask])
+
 
     const handleCompletedChange = () => {
-        task.setCompleted(!task.isCompleted());
-        updateTask(task);
+        const newLists = [...lists];
+        task.setCompleted(!task.isCompleted())
+        newLists[activeIdx].editTask(task.getId(), task)
+
+        setLists(newLists);
     };
 
     const handleImportantChange = () => {
-        task.setIsImportant(!task.isImportant());
-        updateTask(task);
+        const newLists = [...lists];
+        task.setIsImportant(!task.isImportant())
+        newLists[activeIdx].editTask(task.getId(), task)
+
+        setLists(newLists);
+    }
+
+    const handleSelectedTask = () => {
+        setSelectedTask(task);
     }
 
     return (
         <div className={`task-item ${task.isCompleted() ? "completed" : ""}`}>
-            <div className="task-item_left">
+            <div className="task-item-checkbox">
                 <input
                     type="checkbox"
                     className="task-item_checkbox"
                     onChange={e => { e.preventDefault(); handleCompletedChange(); }}
                     checked={task.isCompleted()}
                 />
-                <div className="task-item_title">
-                    <h3>{task.getTitle()}</h3>
-                </div>
             </div>
-            <div className="task-item_right">
+            <div className="task-item_title" onClick={() => { handleSelectedTask() }}>
+                <h3>{task.getTitle()}</h3>
+            </div>
+            <div className="task-item-checkbox">
                 <input
                     type="checkbox"
 
                     className="task-item_important"
-                    onChange={e => { e.preventDefault(); handleCompletedChange(); }}
+                    onChange={e => { e.preventDefault(); handleImportantChange(); }}
                     checked={task.isCompleted()}
                 />
                 <label htmlFor="important" className="important-label">

@@ -1,7 +1,8 @@
 import "./TaskDetails.scss";
-import React from "react";
+import React, { useContext } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { Task } from "@/app/Models/Task";
+import { ActiveListContext, ListsContext } from "../page";
 
 // Helper para convertir de "YYYY-MM-DD" a "DD-MM-YYYY"
 const formatDateToDisplay = (isoDate: string): string => {
@@ -17,17 +18,17 @@ const formatDateToISO = (displayDate: string): string => {
     return `${year}-${month}-${day}`;
 };
 
-export default function TaskDetails({
-    task,
-    onClose,
-    updatedTask,
-}: {
-    task: Task;
-    onClose: () => void;
-    updatedTask: (updatedTask: Task) => void;
-}) {
+interface TaskDetailsProps {
+    task: Task,
+    onClose: any
+}
+
+export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
     // Estado para manejar la fecha seleccionada en formato DD-MM-YYYY
     const [dueDate, setDueDate] = React.useState(formatDateToDisplay(task.getDueDate()));
+
+    const { lists, setLists } = useContext(ListsContext);
+    const { activeIdx } = useContext(ActiveListContext);
 
     const handleChange = (field: "title" | "description" | "dueDate" | "completed", value: string | boolean) => {
         switch (field) {
@@ -50,7 +51,10 @@ export default function TaskDetails({
                 break;
         }
 
-        updatedTask(task);
+        const newLists = [...lists];
+        newLists[activeIdx].editTask(task.getId(), task);
+
+        setLists(newLists);
     };
 
     return (
@@ -83,7 +87,7 @@ export default function TaskDetails({
             </div>
             <div className="due-date-section">
                 <label htmlFor="due-date">Fecha de vencimiento (DD-MM-YYYY):</label>
-                
+
                 <input
                     type="date"
                     id="due-date"
@@ -91,7 +95,7 @@ export default function TaskDetails({
                     value={formatDateToISO(dueDate)}  // Convertir a formato ISO para el calendario
                     onChange={(e) => handleChange("dueDate", formatDateToDisplay(e.target.value))} // Convertir a DD-MM-YYYY
                 />
-                
+
             </div>
         </div>
     );

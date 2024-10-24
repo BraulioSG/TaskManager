@@ -10,9 +10,20 @@ import Sidebar from "@/app/components/Sidebar";
 import Toolbar from "./components/Toolbar";
 
 //Contexts
-export const ListsContext = createContext([new TaskList("")])
-export const ActiveListContext = createContext(0);
-export const ThemeContext = createContext('dark' as "dark" | "light")
+export const ListsContext = createContext({
+  lists: [] as TaskList[],
+  setLists: (lists: TaskList[]) => { }
+});
+
+export const ActiveListContext = createContext({
+  activeIdx: 0,
+  setActiveIdx: (index: number) => { }
+});
+
+export const ThemeContext = createContext({
+  theme: 'dark' as 'dark' | 'light',
+  setTheme: (theme: 'dark' | 'light') => { }
+});
 
 export default function Home() {
   const [theme, setTheme] = useState<'dark' | 'light'>("dark");
@@ -27,13 +38,13 @@ export default function Home() {
   document.documentElement.setAttribute("data-theme", theme as string);
 
   return (
-    <ListsContext.Provider value={lists}>
-      <ActiveListContext.Provider value={activeIdx}>
-        <ThemeContext.Provider value={theme}>
+    <ListsContext.Provider value={{ lists, setLists }}>
+      <ActiveListContext.Provider value={{ activeIdx, setActiveIdx }}>
+        <ThemeContext.Provider value={{ theme, setTheme }}>
           <div className={"main-container"}>
-            <Toolbar setTheme={setTheme} />
-            <Sidebar setLists={setLists} setActiveIdx={setActiveIdx} />
-            <TasksContainer setLists={setLists} />
+            <Toolbar />
+            <Sidebar />
+            <TasksContainer />
           </div>
         </ThemeContext.Provider>
       </ActiveListContext.Provider>

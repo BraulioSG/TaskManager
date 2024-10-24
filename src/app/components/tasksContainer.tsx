@@ -1,42 +1,40 @@
 "use client";
-import { useState, useEffect, useContext } from "react";
 import "./tasksContainer.scss";
-import TaskDetails from "./TaskDetails";
-import { Task, TaskList } from "@/app/Models/Task";
-import TaskItem from "./taskItem";
+
+import { useState, useEffect, useContext } from "react";
 import { ListsContext, ActiveListContext } from "../page";
+import { Task, TaskList } from "@/app/Models/Task";
 import { setTaskLists } from "../utils/Storage";
 
-export default function TasksContainer({ setLists }: { setLists: (lists: TaskList[]) => void }) {
-    const [tasks, setTasks] = useState<Task[]>([]);
+
+import TaskDetails from "./TaskDetails";
+import TaskItem from "./taskItem";
+
+export default function TasksContainer() {
     const [newTaskName, setNewTaskName] = useState<string>("");
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
-    const lists = useContext(ListsContext);
-    const activeIdx = useContext(ActiveListContext);
-
-    useEffect(() => {
-        if (lists && lists[activeIdx]) {
-            setTasks(lists[activeIdx].getAllTasks());
-        }
-    }, [activeIdx, lists]);
+    const { lists, setLists } = useContext(ListsContext);
+    const { activeIdx } = useContext(ActiveListContext);
 
     const updateTask = (updatedTask: Task) => {
+        console.log("task update");
         if (lists) {
             lists[activeIdx].editTask(updatedTask.getId(), updatedTask);
-
-            setTasks(lists[activeIdx].getAllTasks());
-            setLists(lists);
             setTaskLists(lists);
+            setLists(lists);
         }
     };
+
+    useEffect(() => {
+        console.log("lists updated")
+    }, [lists, activeIdx])
 
     const updateList = () => {
         if (lists && newTaskName) {
             const newTask = new Task(newTaskName, "", "00-00-0000");
             console.log(newTask);
             lists[activeIdx].addTask(newTask);
-            setTasks(lists[activeIdx].getAllTasks());
             setLists(setTaskLists(lists));
             setNewTaskName("");
         }
@@ -55,24 +53,18 @@ export default function TasksContainer({ setLists }: { setLists: (lists: TaskLis
                 <div className="top">
                     <h1>{lists[activeIdx]?.getName() ?? "Task Manager"}</h1>
                 </div>
-                {lists.length > 0 &&
+                {lists[activeIdx] &&
                     <div className="list">
                         <div className="filtered-list">
                             <h2>Pending</h2>
                             <hr />
                             <div className="task-list">
-                                {tasks.filter(task => !task.isCompleted()).sort((a, b) => {
+                                {lists[activeIdx].getAllTasks().filter(task => !task.isCompleted()).sort((a, b) => {
                                     if (a.isImportant()) return -1;
                                     if (b.isImportant()) return 1;
                                     return 0;
                                 }).map(((task, index) => (
-                                    <div
-                                        key={index}
-                                        onClick={() => setSelectedTask(task)}
-                                        className="task"
-                                    >
-                                        <TaskItem task={task} updateTask={updateTask} />
-                                    </div>
+                                    <TaskItem key={index} task={task} setSelectedTask={setSelectedTask} />
                                 )
                                 ))}
                             </div>
@@ -81,14 +73,12 @@ export default function TasksContainer({ setLists }: { setLists: (lists: TaskLis
                             <h2>Completed</h2>
                             <hr />
                             <div className="task-list">
-                                {tasks.filter(task => task.isCompleted()).map(((task, index) => (
-                                    <div
-                                        key={index}
-                                        onClick={() => setSelectedTask(task)}
-                                        className="task"
-                                    >
-                                        <TaskItem task={task} updateTask={updateTask} />
-                                    </div>
+                                {lists[activeIdx].getAllTasks().filter(task => task.isCompleted()).sort((a, b) => {
+                                    if (a.isImportant()) return -1;
+                                    if (b.isImportant()) return 1;
+                                    return 0;
+                                }).map(((task, index) => (
+                                    <TaskItem key={index} task={task} setSelectedTask={setSelectedTask} />
                                 )
                                 ))}
                             </div>

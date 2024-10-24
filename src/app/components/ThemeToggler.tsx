@@ -8,18 +8,16 @@ import { setPreferredTheme } from "../utils/Storage";
 
 
 
-export default function ThemeToggler({ setTheme }: any) {
-    const theme = useContext(ThemeContext);
+export default function ThemeToggler() {
+    const { theme, setTheme } = useContext(ThemeContext);
 
     /**
      * updates the theme and save it to the localStorage
      */
     const handleToggleTheme = () => {
-        setTheme((prev: "dark" | "light") => {
-            let newTheme = prev === "dark" ? "light" : "dark";
-            setPreferredTheme(newTheme as "light" | "dark");
-            return newTheme;
-        })
+        let newTheme: "dark" | "light" = theme === "dark" ? "light" : "dark";
+        setPreferredTheme(newTheme as "light" | "dark");
+        setTheme(newTheme);
     }
     return (
         <button className={`ThemeToggler ${theme}`} onClick={handleToggleTheme}>
