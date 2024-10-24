@@ -4,17 +4,17 @@ import { MdOutlineClose } from "react-icons/md";
 import { Task } from "@/app/Models/Task";
 import { ActiveListContext, ListsContext } from "../page";
 
-//Para convertir de "YYYY-MM-DD" a "DD-MM-YYYY"
+// Helper para convertir de "YYYY-MM-DD" a "DD-MM-YYYY"
 const formatDateToDisplay = (isoDate: string): string => {
     const [year, month, day] = isoDate.split("-");
-    if (!year || !month || !day) return "";
+    if (!year || !month || !day) return ""; // Manejo de valores inválidos
     return `${day}-${month}-${year}`;
 };
 
-// Para convertir de "DD-MM-YYYY" a "YYYY-MM-DD"
+// Helper para convertir de "DD-MM-YYYY" a "YYYY-MM-DD"
 const formatDateToISO = (displayDate: string): string => {
     const [day, month, year] = displayDate.split("-");
-    if (!day || !month || !year) return "";
+    if (!day || !month || !year) return ""; // Manejo de valores inválidos
     return `${year}-${month}-${day}`;
 };
 
@@ -37,6 +37,12 @@ export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
                 break;
             case "description":
                 task.setDescription(value as string);
+                break;
+            case "dueDate":
+                // Guardar la fecha en formato ISO (YYYY-MM-DD) en el objeto Task
+                task.setDueDate(formatDateToISO(value as string));
+                // Actualizar el estado para mostrar la fecha en formato DD-MM-YYYY
+                setDueDate(value as string);
                 break;
             case "completed":
                 task.setCompleted(value as boolean);
@@ -86,8 +92,8 @@ export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
                     type="date"
                     id="due-date"
                     className="task-details_due-date"
-                    value={formatDateToISO(task.getDueDate())}
-                    onChange={handleDateChange}
+                    value={formatDateToISO(dueDate)}  // Convertir a formato ISO para el calendario
+                    onChange={(e) => handleChange("dueDate", formatDateToDisplay(e.target.value))} // Convertir a DD-MM-YYYY
                 />
 
             </div>
