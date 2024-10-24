@@ -1,7 +1,7 @@
 .sidebar{
   position: fixed;
   left: 10px;
-  top: 10%;
+  top: 10px;
 
   width: 300px;
   padding: 10px;
@@ -210,7 +210,7 @@
 .showSidebarBtn{
   z-index: 100;
   position: absolute;
-  top: 10%;
+  top: 10px;
   background: rgba(var(--button-bg), 0.5);
   color: rgb(var(--button-fg));
 
