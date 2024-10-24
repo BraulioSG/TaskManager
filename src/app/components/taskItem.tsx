@@ -1,7 +1,7 @@
 import "./taskItem.scss";
 import { Task } from "@/app/Models/Task";
 
-export default function TaskItem({ task, updateTask, }: { task: Task; updateTask: (task: Task) => void; }) {
+export default function TaskItem({ task, updateTask, setSelectedTask }: { task: Task; updateTask: (task: Task) => void; setSelectedTask: (task: Task) => void }) {
 
     const handleCompletedChange = () => {
         task.setCompleted(!task.isCompleted());
