@@ -5,7 +5,7 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 12px 10px;
+    padding:10px;
     background-color: var(--background); // Suponiendo que estás usando variables CSS
 
     .cls-btn {
@@ -34,12 +34,85 @@
         width: 100%;
         padding: 10px 0;
 
-        .task-details_checkbox {
+        .details{
+
+    
+        &-checkbox{
+            display: grid;
+            place-content: center;
+            width: 50px;
+            min-width: 50px;
+    
+        }
+    
+        &_checkbox {
+    
+            appearance: none;
             width: 20px;
             height: 20px;
-            margin-right: 10px;
+            border: 2px solid #cccccc;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+    
+            &:checked {
+                background-color: blue;
+                border-color: blue;
+            }
+    
+            &::after {
+                content: "";
+                position: absolute;
+                top: 46%;
+                left: 22%;
+                width: 6px;
+                height: 10px;
+                border-right: 2px solid white;
+                border-bottom: 2px solid white;
+                transform: rotate(45deg) translate(-50%, -50%);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+    
+            &:checked::after {
+                opacity: 1;
+            }
         }
-
+    
+        &_important {
+            display: none;
+        }
+        }
+        .important-label {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+        }
+    
+        .star {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            background-color: #cccccc;
+            transition: background-color 0.3s ease;
+        }
+    
+        .checked {
+            background-color: gold;
+            display: none;
+        }
+    
+        .details_important:checked + .important-label .unchecked {
+            display: none;
+        }
+    
+        .details_important:checked + .important-label .checked {
+            display: block;
+        }
         .task-details_title {
             flex-grow: 1;
             font-size: 18px;
@@ -58,7 +131,7 @@
 
         .task-details_description {
             width: 100%;
-            height: 100px;
+            height: 90px;
             padding: 10px;
             font-size: 16px;
             border: none;
@@ -92,6 +165,60 @@
             color: var(--text);
             border-radius: 4px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    .image-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 8px 0;
+        gap: 5px;
+
+        img{
+            width: 80%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .btn-img{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;    
+            padding: 10px 0;
+            font-size: 16px;
+            border: none;
+            font-weight: bold;
+            background-color: var(--input-background);
+            color: var(--text);
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+    }
+
+    .btn-delete {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;    
+        padding: 10px 0;
+        font-size: 16px;
+        border: none;
+        font-weight: bold;
+        background-color: var(--input-background);
+        color: red;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(255, 0, 0, 0.2);
         }
     }
 }

@@ -1,20 +1,22 @@
 import "./TaskDetails.scss";
 import React, { useContext } from "react";
-import { MdOutlineClose } from "react-icons/md";
+import { useId } from "react";
+import { MdOutlineClose, MdDelete, MdImage} from "react-icons/md";
 import { Task } from "@/app/Models/Task";
 import { ActiveListContext, ListsContext } from "../page";
+import { setTaskLists } from "../utils/Storage";
 
-// Helper para convertir de "YYYY-MM-DD" a "DD-MM-YYYY"
+//Para convertir de "YYYY-MM-DD" a "DD-MM-YYYY"
 const formatDateToDisplay = (isoDate: string): string => {
     const [year, month, day] = isoDate.split("-");
-    if (!year || !month || !day) return ""; // Manejo de valores inválidos
+    if (!year || !month || !day) return "";
     return `${day}-${month}-${year}`;
 };
 
-// Helper para convertir de "DD-MM-YYYY" a "YYYY-MM-DD"
+//Para convertir de "DD-MM-YYYY" a "YYYY-MM-DD"
 const formatDateToISO = (displayDate: string): string => {
     const [day, month, year] = displayDate.split("-");
-    if (!day || !month || !year) return ""; // Manejo de valores inválidos
+    if (!day || !month || !year) return ""; 
     return `${year}-${month}-${day}`;
 };
 
@@ -24,13 +26,13 @@ interface TaskDetailsProps {
 }
 
 export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
-    // Estado para manejar la fecha seleccionada en formato DD-MM-YYYY
-    const [dueDate, setDueDate] = React.useState(formatDateToDisplay(task.getDueDate()));
 
     const { lists, setLists } = useContext(ListsContext);
     const { activeIdx } = useContext(ActiveListContext);
 
-    const handleChange = (field: "title" | "description" | "dueDate" | "completed", value: string | boolean) => {
+    const importantId = useId();
+
+    const handleChange = (field: "title" | "description" | "dueDate" | "completed" | "important", value: string | boolean) => {
         switch (field) {
             case "title":
                 task.setTitle(value as string);
@@ -39,14 +41,13 @@ export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
                 task.setDescription(value as string);
                 break;
             case "dueDate":
-                // Guardar la fecha en formato ISO (YYYY-MM-DD) en el objeto Task
-                task.setDueDate(formatDateToISO(value as string));
-                // Actualizar el estado para mostrar la fecha en formato DD-MM-YYYY
-                setDueDate(value as string);
+                task.setDueDate(value as string);
                 break;
             case "completed":
                 task.setCompleted(value as boolean);
                 break;
+            case "important":
+                task.setIsImportant(value as boolean);
             default:
                 break;
         }
@@ -54,8 +55,40 @@ export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
         const newLists = [...lists];
         newLists[activeIdx].editTask(task.getId(), task);
 
+        setTaskLists(newLists);
         setLists(newLists);
     };
+
+    const handleImage = () => {
+        let image = window.prompt("Insert the URL of the background you want");
+
+        if (image) {
+            task.setImageUrl(image);
+            const newLists = [...lists];
+            newLists[activeIdx].editTask(task.getId(), task);
+
+            setTaskLists(newLists);
+            setLists(newLists);
+
+        } else {
+            console.log("No URL provided");
+        }
+    }
+    const handleDelete = () => {
+        const { pending, completed } = lists[activeIdx].getTasks();
+    
+        const newPendingTasks = pending.filter(t => t.getId() !== task.getId());
+        const newCompletedTasks = completed.filter(t => t.getId() !== task.getId());
+    
+        const newLists = [...lists];
+        newLists[activeIdx].setTasks([...newPendingTasks, ...newCompletedTasks]);
+    
+        setTaskLists(newLists);
+        setLists(newLists);
+        onClose();
+    };
+    
+
 
     return (
         <div className="task-details">
@@ -63,12 +96,14 @@ export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
                 <MdOutlineClose className="cls-icon" onClick={onClose} />
             </div>
             <div className="top-details">
-                <input
-                    type="checkbox"
-                    className="task-details_checkbox"
-                    checked={task.isCompleted()}
-                    onChange={() => handleChange("completed", !task.isCompleted())}
-                />
+                <div className="details-checkbox">
+                    <input
+                        type="checkbox"
+                        className="details_checkbox"
+                        checked={task.isCompleted()}
+                        onChange={() => handleChange("completed", !task.isCompleted())}
+                    />
+                </div>
                 <input
                     type="text"
                     className="task-details_title"
@@ -76,6 +111,21 @@ export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
                     onChange={(e) => handleChange("title", e.target.value)}
                     placeholder="Título de la tarea"
                 />
+                <div className="details-checkbox">
+                    <input
+                        type="checkbox"
+                        id={importantId}
+                        className="details_important"
+                        onChange={() => {
+                            handleChange("important", !task.isImportant());
+                        }}
+                        checked={task.isImportant()}
+                    />
+                    <label htmlFor={importantId} className="important-label">
+                        <div className="star unchecked"></div>
+                        <div className="star checked"></div>
+                    </label>
+                </div>
             </div>
             <div className="description-section">
                 <textarea
@@ -92,10 +142,27 @@ export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
                     type="date"
                     id="due-date"
                     className="task-details_due-date"
-                    value={formatDateToISO(dueDate)}  // Convertir a formato ISO para el calendario
+                    value={formatDateToISO(task.getDueDate())}
                     onChange={(e) => handleChange("dueDate", formatDateToDisplay(e.target.value))} // Convertir a DD-MM-YYYY
                 />
 
+            </div>
+            <div className="image-section">
+                {
+                    task.getImageUrl() ? (
+                        <img src={`${task.getImageUrl()}`} alt="image" />
+                    ) : (
+                        <p>No hay imagen</p>	
+                    )
+                }
+                <div className="btn-img" onClick={handleImage}>
+                    <MdImage className="btn-img_icon"/>
+                    <p className="btn-img_text">Añadir imagen</p>
+                </div>
+            </div>
+            <div className="btn-delete" onClick={handleDelete}>
+                <p className="btn-delete_text">Delete Task</p>
+                <MdDelete className="btn-delete_icon"/>
             </div>
         </div>
     );
