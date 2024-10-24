@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import "./taskItem.scss";
 import { Task } from "@/app/Models/Task";
-
+import { useId } from "react";
 import { ActiveListContext, ListsContext } from "../page";
 import { setTaskLists } from "../utils/Storage";
 
@@ -14,6 +14,7 @@ export default function TaskItem({ task, setSelectedTask }: TaskItemProps) {
     const { lists, setLists } = useContext(ListsContext);
     const { activeIdx } = useContext(ActiveListContext);
     const [currentTask] = useState<Task>(task);
+    const importantId = useId();
 
     useEffect(() => {
 
@@ -55,35 +56,20 @@ export default function TaskItem({ task, setSelectedTask }: TaskItemProps) {
             </div>
             <div className="task-item-checkbox">
                 <input
-                    type="checkbox"
-
-                    className="task-item_important"
-                    onChange={e => { e.preventDefault(); handleImportantChange(); }}
-                    checked={task.isCompleted()}
+                type="checkbox"
+                id={importantId} 
+                className="task-item_important"
+                onChange={(e) => {
+                    e.stopPropagation();
+                    handleImportantChange();
+                }}
+                checked={task.isImportant()}
                 />
-                <label htmlFor="important" className="important-label">
-                    <div className="star unchecked"></div>
-                    <div className="star checked"></div>
+                <label htmlFor={importantId} className="important-label">
+                <div className="star unchecked"></div>
+                <div className="star checked"></div>
                 </label>
             </div>
         </div>
-      </div>
-      <div className="task-item_right">
-        <input
-          type="checkbox"
-          id={importantId} 
-          className="task-item_important"
-          onChange={(e) => {
-            e.stopPropagation();
-            handleImportantChange();
-          }}
-          checked={task.isImportant()}
-        />
-        <label htmlFor={importantId} className="important-label">
-          <div className="star unchecked"></div>
-          <div className="star checked"></div>
-        </label>
-      </div>
-    </div>
-  );
+    );
 }
