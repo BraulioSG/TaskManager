@@ -15,7 +15,7 @@ export const ActiveListContext = createContext(0);
 export const ThemeContext = createContext('dark' as "dark" | "light")
 
 export default function Home() {
-  const [theme, setTheme] = useState<'dark' | 'light'>();
+  const [theme, setTheme] = useState<'dark' | 'light'>("dark");
   const [lists, setLists] = useState<TaskList[]>([]);
   const [activeIdx, setActiveIdx] = useState<number>(0);
 
@@ -29,12 +29,10 @@ export default function Home() {
   return (
     <ListsContext.Provider value={lists}>
       <ActiveListContext.Provider value={activeIdx}>
-        {/* @ts-ignore */}
         <ThemeContext.Provider value={theme}>
           <div className={"main-container"}>
             <Toolbar setTheme={setTheme} />
             <Sidebar setLists={setLists} setActiveIdx={setActiveIdx} />
-            {/* @ts-ignore */}
             <TasksContainer setLists={setLists} />
           </div>
         </ThemeContext.Provider>

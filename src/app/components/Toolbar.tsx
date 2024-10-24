@@ -11,6 +11,9 @@ export default function Toolbar({ setTheme }: any) {
         body.style.backgroundImage = `url("${getBackground()}")`;
     }, [])
 
+    /**
+     * updates the background with a window prompt
+     */
     const handleBackgroundChange = () => {
         let newBackground = window.prompt("Insert the URL of the background you want");
 

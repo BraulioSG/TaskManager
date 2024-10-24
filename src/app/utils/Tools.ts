@@ -1,4 +1,9 @@
-export function generateID(str: string){
+/**
+ * Generates an id based on a string, currentTime and random numbers
+ * @param str base for the id generation
+ * @returns a random string that can be used as an ID
+ */
+export function generateID(str: string):string{
 
     const now = new Date();
     const millis = now.getMilliseconds();

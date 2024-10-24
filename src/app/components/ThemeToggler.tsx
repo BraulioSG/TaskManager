@@ -4,15 +4,21 @@ import { useContext } from "react"
 import { ThemeContext } from "../page";
 
 import { TiWeatherNight, TiWeatherSunny } from "react-icons/ti";
+import { setPreferredTheme } from "../utils/Storage";
 
 
 
 export default function ThemeToggler({ setTheme }: any) {
     const theme = useContext(ThemeContext);
 
+    /**
+     * updates the theme and save it to the localStorage
+     */
     const handleToggleTheme = () => {
         setTheme((prev: "dark" | "light") => {
-            return prev === "dark" ? "light" : "dark";
+            let newTheme = prev === "dark" ? "light" : "dark";
+            setPreferredTheme(newTheme as "light" | "dark");
+            return newTheme;
         })
     }
     return (
