@@ -25,7 +25,7 @@ export default function TaskDetails({
     onClose: () => void;
     updatedTask: (updatedTask: Task) => void;
 }) {
-
+    
     const handleChange = (field: "title" | "description" | "completed", value: string | boolean) => {
         switch (field) {
             case "title":
