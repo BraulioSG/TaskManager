@@ -105,7 +105,6 @@ export default function TasksContainer() {
                     <TaskDetails
                         task={selectedTask}
                         onClose={() => setSelectedTask(null)}
-                        updatedTask={updateTask}
                     />
                 ) : null}
             </aside>
