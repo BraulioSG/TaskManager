@@ -6,6 +6,7 @@
     width: 100%;
     height: 100%;
     padding: 12px 10px;
+    background-color: var(--background); // Suponiendo que estás usando variables CSS
 
     .cls-btn {
         display: flex;
@@ -13,11 +14,84 @@
         justify-content: flex-end;
         width: 100%;
         height: 25px;
+        
         .cls-icon {
-            color: --text;
+            color: var(--text); // Usa la variable para el color del texto
             width: 25px;
             height: 25px;
             cursor: pointer;
+
+            &:hover {
+                color: var(--primary); // Cambia el color al pasar el mouse
+            }
+        }
+    }
+
+    .top-details {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 10px 0;
+
+        .task-details_checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .task-details_title {
+            flex-grow: 1;
+            font-size: 18px;
+            padding: 5px 10px;
+            border: none;
+            background-color: var(--input-background);
+            color: var(--text);
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    .description-section {
+        width: 100%;
+        padding: 10px 0;
+
+        .task-details_description {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            background-color: var(--input-background);
+            color: var(--text);
+            border-radius: 4px;
+            resize: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    .due-date-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding: 10px 0;
+
+        label {
+            font-size: 14px;
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+
+        .task-details_due-date {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: none;
+            background-color: var(--input-background);
+            color: var(--text);
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
     }
 }
