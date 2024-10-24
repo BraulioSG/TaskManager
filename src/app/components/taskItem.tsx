@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import "./taskItem.scss";
 import { Task } from "@/app/Models/Task";
+
 import { ActiveListContext, ListsContext } from "../page";
 import { setTaskLists } from "../utils/Storage";
 
@@ -66,5 +67,23 @@ export default function TaskItem({ task, setSelectedTask }: TaskItemProps) {
                 </label>
             </div>
         </div>
-    );
+      </div>
+      <div className="task-item_right">
+        <input
+          type="checkbox"
+          id={importantId} 
+          className="task-item_important"
+          onChange={(e) => {
+            e.stopPropagation();
+            handleImportantChange();
+          }}
+          checked={task.isImportant()}
+        />
+        <label htmlFor={importantId} className="important-label">
+          <div className="star unchecked"></div>
+          <div className="star checked"></div>
+        </label>
+      </div>
+    </div>
+  );
 }
