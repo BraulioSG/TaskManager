@@ -25,12 +25,15 @@ export default function TasksContainer({ setLists }: { setLists: (lists: TaskLis
     const updateTask = (updatedTask: Task) => {
         if (lists) {
             const currentList = lists[activeIdx];
-            const taskIndex = currentList.getTasks().pending.findIndex(task => task.getTitle() === updatedTask.getTitle());
-            console.log(taskIndex);
+            const taskIndex = currentList.getTasks().pending.findIndex(task => task.getId() === updatedTask.getId());
 
             if (taskIndex !== -1) {
-                currentList.getTasks().pending[taskIndex] = updatedTask;
-                setTasks([...currentList.getTasks().pending]);
+                // Se actualiza la tarea dentro de la lista
+                const updatedPendingTasks = currentList.getTasks().pending.map((task, index) => 
+                    index === taskIndex ? updatedTask : task
+                );
+                currentList.setTasks([...updatedPendingTasks, ...currentList.getTasks().completed]);
+                setTasks(updatedPendingTasks);
                 setLists(setTaskLists(lists));
             }
         }
