@@ -12,7 +12,6 @@ export default function Sidebar({ setLists, setActiveIdx }) {
     const lists = useContext(ListsContext);
     const activeIdx = useContext(ActiveListContext);
 
-    const [isOnFocus, setIsOnFocus] = useState<boolean>(false);
     const [showSideBar, setShowSideBar] = useState<boolean>(false);
 
     const handleNewlist = () => {
@@ -46,6 +45,8 @@ export default function Sidebar({ setLists, setActiveIdx }) {
 
             let num: number = parseInt(digit) - 1;
             if (num < 0) num = 9;
+
+            if (num >= lists.length) return;
 
             setActiveIdx(num);
         }
@@ -86,7 +87,7 @@ export default function Sidebar({ setLists, setActiveIdx }) {
                     })}
                 </div>
                 <div className="newList">
-                    <input type="text" id="newListInput" onFocus={() => setIsOnFocus(true)} onBlur={() => setIsOnFocus(false)} placeholder="Your new list" />
+                    <input type="text" id="newListInput" placeholder="Your new list" />
                     <button onClick={handleNewlist} className="newListBtn">
                         <span className="icon"><TfiPlus /></span>
                         <span className="text">New List</span>
