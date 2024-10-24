@@ -17,34 +17,26 @@ export default function TasksContainer({ setLists }: { setLists: (lists: TaskLis
 
     useEffect(() => {
         if (lists && lists[activeIdx]) {
-            const { pending } = lists[activeIdx].getTasks();
-            setTasks(pending);
+            setTasks(lists[activeIdx].getAllTasks());
         }
     }, [activeIdx, lists]);
 
     const updateTask = (updatedTask: Task) => {
         if (lists) {
-            const currentList = lists[activeIdx];
-            const taskIndex = currentList.getTasks().pending.findIndex(task => task.getId() === updatedTask.getId());
+            lists[activeIdx].editTask(updatedTask.getId(), updatedTask);
 
-            if (taskIndex !== -1) {
-                // Se actualiza la tarea dentro de la lista
-                const updatedPendingTasks = currentList.getTasks().pending.map((task, index) => 
-                    index === taskIndex ? updatedTask : task
-                );
-                currentList.setTasks([...updatedPendingTasks, ...currentList.getTasks().completed]);
-                setTasks(updatedPendingTasks);
-                setLists(setTaskLists(lists));
-            }
+            setTasks(lists[activeIdx].getAllTasks());
+            setLists(lists);
+            setTaskLists(lists);
         }
     };
 
     const updateList = () => {
         if (lists && newTaskName) {
             const newTask = new Task(newTaskName, "", "00-00-0000");
+            console.log(newTask);
             lists[activeIdx].addTask(newTask);
-            const { pending } = lists[activeIdx].getTasks();
-            setTasks(pending);
+            setTasks(lists[activeIdx].getAllTasks());
             setLists(setTaskLists(lists));
             setNewTaskName("");
         }
@@ -61,23 +53,52 @@ export default function TasksContainer({ setLists }: { setLists: (lists: TaskLis
         <div className="tasks-component" onClick={handleOutsideClick}>
             <div className="tasks-container" >
                 <div className="top">
-                    <h1>Tasks</h1>
+                    <h1>{lists[activeIdx]?.getName() ?? "Task Manager"}</h1>
                 </div>
-                <div className="list">
-                    {tasks.map((task, index) => (
-                        <div
-                            key={index}
-                            onClick={() => setSelectedTask(task)}
-                            className="task"
-                        >
-                            <TaskItem task={task} updateTask={updateTask} />
+                {lists.length > 0 &&
+                    <div className="list">
+                        <div className="filtered-list">
+                            <h2>Pending</h2>
+                            <hr />
+                            <div className="task-list">
+                                {tasks.filter(task => !task.isCompleted()).sort((a, b) => {
+                                    if (a.isImportant()) return -1;
+                                    if (b.isImportant()) return 1;
+                                    return 0;
+                                }).map(((task, index) => (
+                                    <div
+                                        key={index}
+                                        onClick={() => setSelectedTask(task)}
+                                        className="task"
+                                    >
+                                        <TaskItem task={task} updateTask={updateTask} />
+                                    </div>
+                                )
+                                ))}
+                            </div>
                         </div>
-                    ))}
-                </div>
+                        <div className="filtered-list">
+                            <h2>Completed</h2>
+                            <hr />
+                            <div className="task-list">
+                                {tasks.filter(task => task.isCompleted()).map(((task, index) => (
+                                    <div
+                                        key={index}
+                                        onClick={() => setSelectedTask(task)}
+                                        className="task"
+                                    >
+                                        <TaskItem task={task} updateTask={updateTask} />
+                                    </div>
+                                )
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                }
                 <div className="addTask">
                     <input
                         type="text"
-                        placeholder="+ Agregar una tarea"
+                        placeholder="New Task"
                         value={newTaskName}
                         onChange={(e) => setNewTaskName(e.target.value)}
                         onKeyDown={(e) => {
@@ -85,6 +106,7 @@ export default function TasksContainer({ setLists }: { setLists: (lists: TaskLis
                                 updateList();
                             }
                         }}
+                        disabled={lists.length <= 0}
                     />
                 </div>
             </div>

@@ -238,12 +238,12 @@
 
 }
 
-.hide{
+.sidebar.hide, .showSidebarBtn.hide{
   left: -100%;
   animation: slideOut 1s ease-in-out;
 }
 
-.show{
+.sidebar.show, .showSidebarBtn.show{
   left: 10px;
   animation: slideIn 1s ease-in-out;
 }

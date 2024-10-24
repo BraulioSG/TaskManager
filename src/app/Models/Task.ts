@@ -23,6 +23,7 @@ export class Task{
 
     public toString(): string {
         return JSON.stringify({
+            id: this.id,
             title: this.title,
             description: this.description,
             dueDate: this.dueDate,
@@ -109,6 +110,17 @@ export class TaskList {
         })
     }
 
+    public editTask(id: string, task: Task){
+        for(let i = 0; i < this.tasks.length; i++){
+            let currentTask = this.tasks[i];
+            console.log(currentTask, id);
+            if(currentTask.getId() === id){
+                this.tasks[i] = task; 
+                return;
+            }
+        }
+    }
+
     //SETTERS
     public setName(name: string) { this.name = name; }
 
@@ -117,7 +129,7 @@ export class TaskList {
     //GETTERS
     public getName(): string { return this.name; }
 
-    public getTasks(sorted: boolean = false) {
+    public getTasks() {
         const completed : Task[] = [];
         let pending: Task[] = [];
 
@@ -129,19 +141,10 @@ export class TaskList {
             }
         })
 
-        if(sorted){
-            pending = pending.sort((a,  b) => {
-                if(a.isImportant()) return 1;
-                if(b.isImportant()) return -1;
-
-                return 0;
-            })
-        }
-
         return { pending , completed };
     }
 
-    public getId(){
-        return this.id;
-    }
+    public getAllTasks(){ return this.tasks; }
+
+    public getId(){ return this.id; }
 }
