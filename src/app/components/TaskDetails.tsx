@@ -1,38 +1,48 @@
 import "./TaskDetails.scss";
+import React, { useContext } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { Task } from "@/app/Models/Task";
+import { ActiveListContext, ListsContext } from "../page";
 
-//Para convertir de "YYYY-MM-DD" a "DD-MM-YYYY"
+// Helper para convertir de "YYYY-MM-DD" a "DD-MM-YYYY"
 const formatDateToDisplay = (isoDate: string): string => {
     const [year, month, day] = isoDate.split("-");
-    if (!year || !month || !day) return ""; 
+    if (!year || !month || !day) return ""; // Manejo de valores inválidos
     return `${day}-${month}-${year}`;
 };
 
-// Para convertir de "DD-MM-YYYY" a "YYYY-MM-DD"
+// Helper para convertir de "DD-MM-YYYY" a "YYYY-MM-DD"
 const formatDateToISO = (displayDate: string): string => {
     const [day, month, year] = displayDate.split("-");
-    if (!day || !month || !year) return ""; 
+    if (!day || !month || !year) return ""; // Manejo de valores inválidos
     return `${year}-${month}-${day}`;
 };
 
-export default function TaskDetails({
-    task,
-    onClose,
-    updatedTask,
-}: {
-    task: Task;
-    onClose: () => void;
-    updatedTask: (updatedTask: Task) => void;
-}) {
-    
-    const handleChange = (field: "title" | "description" | "completed", value: string | boolean) => {
+interface TaskDetailsProps {
+    task: Task,
+    onClose: any
+}
+
+export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
+    // Estado para manejar la fecha seleccionada en formato DD-MM-YYYY
+    const [dueDate, setDueDate] = React.useState(formatDateToDisplay(task.getDueDate()));
+
+    const { lists, setLists } = useContext(ListsContext);
+    const { activeIdx } = useContext(ActiveListContext);
+
+    const handleChange = (field: "title" | "description" | "dueDate" | "completed", value: string | boolean) => {
         switch (field) {
             case "title":
                 task.setTitle(value as string);
                 break;
             case "description":
                 task.setDescription(value as string);
+                break;
+            case "dueDate":
+                // Guardar la fecha en formato ISO (YYYY-MM-DD) en el objeto Task
+                task.setDueDate(formatDateToISO(value as string));
+                // Actualizar el estado para mostrar la fecha en formato DD-MM-YYYY
+                setDueDate(value as string);
                 break;
             case "completed":
                 task.setCompleted(value as boolean);
@@ -41,13 +51,10 @@ export default function TaskDetails({
                 break;
         }
 
-        updatedTask(task);
-    };
+        const newLists = [...lists];
+        newLists[activeIdx].editTask(task.getId(), task);
 
-    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const isoDate = e.target.value; 
-        task.setDueDate(formatDateToDisplay(isoDate));
-        updatedTask(task);
+        setLists(newLists);
     };
 
     return (
@@ -80,13 +87,15 @@ export default function TaskDetails({
             </div>
             <div className="due-date-section">
                 <label htmlFor="due-date">Fecha de vencimiento (DD-MM-YYYY):</label>
+
                 <input
                     type="date"
                     id="due-date"
                     className="task-details_due-date"
-                    value={formatDateToISO(task.getDueDate())}
-                    onChange={handleDateChange} 
+                    value={formatDateToISO(dueDate)}  // Convertir a formato ISO para el calendario
+                    onChange={(e) => handleChange("dueDate", formatDateToDisplay(e.target.value))} // Convertir a DD-MM-YYYY
                 />
+
             </div>
         </div>
     );

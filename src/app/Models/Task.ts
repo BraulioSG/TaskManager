@@ -213,7 +213,6 @@ export class TaskList {
     public editTask(id: string, task: Task): void{
         for(let i = 0; i < this.tasks.length; i++){
             let currentTask = this.tasks[i];
-            console.log(currentTask, id);
             if(currentTask.getId() === id){
                 this.tasks[i] = task; 
                 return;

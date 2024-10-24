@@ -8,9 +8,9 @@ import { ActiveListContext, ListsContext } from "../page";
 
 
 //@ts-ignore
-export default function Sidebar({ setLists, setActiveIdx }) {
-    const lists = useContext(ListsContext);
-    const activeIdx = useContext(ActiveListContext);
+export default function Sidebar() {
+    const { lists, setLists } = useContext(ListsContext);
+    const { activeIdx, setActiveIdx } = useContext(ActiveListContext);
 
     const [showSideBar, setShowSideBar] = useState<boolean>(false);
 
@@ -35,6 +35,7 @@ export default function Sidebar({ setLists, setActiveIdx }) {
      */
     const handleDeleteList = (id: string) => {
         setLists(deleteTaskList(id));
+        setActiveIdx(0);
     }
 
 

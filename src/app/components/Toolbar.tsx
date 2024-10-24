@@ -1,10 +1,13 @@
 import "./Toolbar.scss"
 
-import ThemeToggler from "./ThemeToggler"
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { getBackground, setBackground } from "../utils/Storage";
+import { ThemeContext } from "../page";
 
-export default function Toolbar({ setTheme }: any) {
+import ThemeToggler from "./ThemeToggler"
+export default function Toolbar() {
+
+    const { theme, setTheme } = useContext(ThemeContext)
 
     useEffect(() => {
         const body = document.querySelector(".main-container") as HTMLElement;
@@ -28,7 +31,7 @@ export default function Toolbar({ setTheme }: any) {
 
     return (
         <div className="Toolbar">
-            <ThemeToggler setTheme={setTheme} />
+            <ThemeToggler />
             <button className="changeBg" onClick={handleBackgroundChange}>Change background</button>
         </div>
     )
