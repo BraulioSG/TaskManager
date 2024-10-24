@@ -12,7 +12,7 @@ export default function Sidebar({ setLists, setActiveIdx }) {
     const lists = useContext(ListsContext);
     const activeIdx = useContext(ActiveListContext);
 
-    const [isOnFocus, setIsOnFocus] = useState<boolean>(true);
+    const [isOnFocus, setIsOnFocus] = useState<boolean>(false);
     const [showSideBar, setShowSideBar] = useState<boolean>(false);
 
     const handleNewlist = () => {
@@ -31,12 +31,14 @@ export default function Sidebar({ setLists, setActiveIdx }) {
         setLists(deleteTaskList(id));
     }
 
-    const handleKeyPressed = (event: any) => {
-        if (isOnFocus) {
-            if (event.key === "Enter") handleNewlist();
 
+    document.documentElement.addEventListener("keydown", (event: any) => {
+
+        if (document.activeElement?.tagName === "INPUT") {
+            if (event.key === "Enter" && document.activeElement.id === "newListInput") handleNewlist();
             return;
-        };
+        }
+
         const code = event.code;
 
         if (code.startsWith('Digit')) {
@@ -48,7 +50,9 @@ export default function Sidebar({ setLists, setActiveIdx }) {
             setActiveIdx(num);
         }
 
-    }
+    })
+
+
 
     return (
         <>
@@ -56,7 +60,7 @@ export default function Sidebar({ setLists, setActiveIdx }) {
                 <TfiLayoutListThumb />
                 <span>My lists</span>
             </button>
-            <aside className={`sidebar ${showSideBar ? "show" : "hide"}`} onKeyDown={(e) => handleKeyPressed(e)}>
+            <aside className={`sidebar ${showSideBar ? "show" : "hide"}`} id="sidebar">
                 <div className="sidebar-top">
 
                     <h2>My Lists</h2>
