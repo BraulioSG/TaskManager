@@ -32,7 +32,11 @@ export default function Sidebar({ setLists, setActiveIdx }) {
     }
 
     const handleKeyPressed = (event: any) => {
-        if (isOnFocus) return;
+        if (isOnFocus) {
+            if (event.key === "Enter") handleNewlist();
+
+            return;
+        };
         const code = event.code;
 
         if (code.startsWith('Digit')) {
