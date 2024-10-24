@@ -18,6 +18,7 @@
 
   transition: 0.3s ease;
 
+
   .sidebar-top{
     display: flex;
     justify-content: center;
@@ -203,7 +204,48 @@
 
   }
   
+  
+}
 
+.showSidebarBtn{
+  z-index: 100;
+  position: absolute;
+  top: 10%;
+  background: rgba(var(--button-bg), 0.5);
+  color: rgb(var(--button-fg));
+
+  padding: 15px;
+  font-size: 1.1rem;
+
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  opacity: 0.5;
+  backdrop-filter: blur(10px);
+
+  &:hover{
+    opacity: 1;
+  }
+
+
+  svg{
+    transform: scale(1.3);
+  }
+
+}
+
+.hide{
+  left: -100%;
+  animation: slideOut 1s ease-in-out;
+}
+
+.show{
+  left: 10px;
+  animation: slideIn 1s ease-in-out;
 }
 
 @media only screen and (max-width: 600px) {
@@ -211,8 +253,17 @@
     width: 100%;
     left: 0;
     top: 0;
+    padding: 20px 20px;
     border-radius: 0;
     height: 100%;
+
+    .sidebar-top{
+      button{
+        svg{
+          transform: scale(2);
+        }
+      }
+    }
 
     .lists-container{
       max-height: 100%;
@@ -238,5 +289,33 @@
       }
     }
   }
+
+  .hide{
+    left: -100%;
+    animation: slideOut 1s ease-in-out;
+  }
   
+  .sidebar.show{
+    left: 0px;
+    animation: slideIn 1s ease-in-out;
+  }
+  
+}
+
+@keyframes slideIn {
+  from{
+    left: -100%;
+  }
+  to{
+    left: 10px;
+  }
+}
+
+@keyframes slideOut{
+  from{
+    left: 10px;
+  }
+  to{
+    left: -100%;
+  }
 }

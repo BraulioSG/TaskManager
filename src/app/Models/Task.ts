@@ -104,6 +104,7 @@ export class TaskList {
     public toString(): string {
         return JSON.stringify({
             name: this.name,
+            id: this.id,
             tasks: this.tasks.map(task => task.toString())
         })
     }
