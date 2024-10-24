@@ -74,7 +74,6 @@ export function deleteTaskList(id: string): TaskList[]{
     let lists = getTaskLists();
 
     lists = lists.filter(list => {
-        console.table({id, v: list.getId()})
         return list.getId() !== id;
     });
     setTaskLists(lists);
