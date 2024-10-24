@@ -3,7 +3,9 @@ import "./tasksContainer.scss";
 
 import { useState, useEffect, useContext } from "react";
 import { ListsContext, ActiveListContext } from "../page";
-import { Task, TaskList } from "@/app/Models/Task";
+import { Task } from "@/app/Models/Task";
+import { TfiBarChart, TfiBarChartAlt } from "react-icons/tfi";
+
 import { setTaskLists } from "../utils/Storage";
 
 
@@ -13,6 +15,7 @@ import TaskItem from "./taskItem";
 export default function TasksContainer() {
     const [newTaskName, setNewTaskName] = useState<string>("");
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+    const [sortOrder, setSortOrder] = useState<boolean>(false);
 
     const { lists, setLists } = useContext(ListsContext);
     const { activeIdx } = useContext(ActiveListContext);
@@ -49,12 +52,16 @@ export default function TasksContainer() {
                 {lists[activeIdx] &&
                     <div className="list">
                         <div className="filtered-list">
-                            <h2>Pending</h2>
+                            <div className="filtered-list-title">
+                                <h2>Pending</h2>
+                                <button onClick={() => setSortOrder(prev => !prev)}> {sortOrder ? <TfiBarChart /> : <TfiBarChartAlt />} Sort</button>
+                            </div>
                             <hr />
                             <div className="task-list">
                                 {lists[activeIdx].getAllTasks().filter(task => !task.isCompleted()).sort((a, b) => {
-                                    if (a.isImportant()) return -1;
-                                    if (b.isImportant()) return 1;
+                                    const order = sortOrder ? -1 : 1;
+                                    if (a.isImportant()) return -1 * order;
+                                    if (b.isImportant()) return 1 * order;
                                     return 0;
                                 }).map(((task, index) => (
                                     <TaskItem key={index} task={task} setSelectedTask={setSelectedTask} />
@@ -63,12 +70,16 @@ export default function TasksContainer() {
                             </div>
                         </div>
                         <div className="filtered-list">
-                            <h2>Completed</h2>
+                            <div className="filtered-list-title">
+                                <h2>Completed</h2>
+                                <button onClick={() => setSortOrder(prev => !prev)}> {sortOrder ? <TfiBarChart /> : <TfiBarChartAlt />} Sort</button>
+                            </div>
                             <hr />
                             <div className="task-list">
                                 {lists[activeIdx].getAllTasks().filter(task => task.isCompleted()).sort((a, b) => {
-                                    if (a.isImportant()) return -1;
-                                    if (b.isImportant()) return 1;
+                                    const order = sortOrder ? -1 : 1;
+                                    if (a.isImportant()) return -1 * order;
+                                    if (b.isImportant()) return 1 * order;
                                     return 0;
                                 }).map(((task, index) => (
                                     <TaskItem key={index} task={task} setSelectedTask={setSelectedTask} />

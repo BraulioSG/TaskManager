@@ -1,18 +1,21 @@
 .task-item {
-    display: flex;
+    display: grid;
+    grid-template-columns: 50px 1fr 50px;
     width: 100%;
     align-items: center;
     justify-content: space-between;
     border-radius: 4px;
-    background-color: rgba(var( --background-task), 0.95);
+    background-color: rgba(var( --background-task), 0.5);
 
     animation: appear 0.5s linear;
 
     transition: all 0.3s ease;
     animation-fill-mode: backwards;
 
+    position: relative;
+
     &:hover {
-        background: rgba(var( --background-task), 0.8);
+        background: rgba(var( --background-task), 0.7);
         cursor: pointer;
     }
 
@@ -22,27 +25,40 @@
         align-items: flex-start;
         color: var(--text);
 
-        width: 100%;
         height: 50px;
+        overflow-x: hidden;
 
         &-top{
             display: flex;
             width: 100%;
             justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            h3{
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
+
+                span{
+                    text-overflow: ellipsis;
+                }
+            }
+            p{
+                min-width: 100px;
+                text-align: center;
+            }
         }
     }
     &-checkbox{
         display: grid;
         place-content: center;
         width: 50px;
+        min-width: 50px;
 
-    }
-
-    &_title h3 {
-        margin: 0;
     }
 
     &_checkbox {
+
         appearance: none;
         width: 20px;
         height: 20px;

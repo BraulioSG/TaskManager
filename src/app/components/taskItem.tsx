@@ -52,7 +52,7 @@ export default function TaskItem({ task, setSelectedTask }: TaskItemProps) {
                 />
             </div>
             <div className="task-item_title" onClick={() => { handleSelectedTask() }}>
-                <div className="task-item_title-top"><h3>{task.getTitle()}</h3> <span>{task.getDueDate()}</span></div>
+                <div className="task-item_title-top"><h3><span>{task.getTitle()}</span></h3> <p>{task.getDueDate()}</p></div>
                 <p>{task.getDescription()}</p>
             </div>
             <div className="task-item-checkbox">
