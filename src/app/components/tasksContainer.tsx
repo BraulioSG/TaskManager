@@ -66,7 +66,13 @@ export default function TasksContainer({ setLists }: { setLists: (lists: TaskLis
                                     if (b.isImportant()) return 1;
                                     return 0;
                                 }).map(((task, index) => (
-                                    <TaskItem task={task} updateTask={updateTask} setSelectedTask={setSelectedTask} />
+                                    <div
+                                        key={index}
+                                        onClick={() => setSelectedTask(task)}
+                                        className="task"
+                                    >
+                                        <TaskItem task={task} updateTask={updateTask} />
+                                    </div>
                                 )
                                 ))}
                             </div>

@@ -1,7 +1,7 @@
 import "./taskItem.scss";
 import { Task } from "@/app/Models/Task";
 
-export default function TaskItem({ task, updateTask, setSelectedTask }: { task: Task; updateTask: (task: Task) => void; setSelectedTask: (task: Task) => void }) {
+export default function TaskItem({ task, updateTask, }: { task: Task; updateTask: (task: Task) => void; }) {
 
     const handleCompletedChange = () => {
         task.setCompleted(!task.isCompleted());
@@ -29,12 +29,12 @@ export default function TaskItem({ task, updateTask, setSelectedTask }: { task: 
             <div className="task-item_right">
                 <input
                     type="checkbox"
-                    id={`important-${task.getId()}`}
+
                     className="task-item_important"
-                    onChange={e => { e.preventDefault(); handleImportantChange(); }}
-                    checked={task.isImportant()}
+                    onChange={e => { e.preventDefault(); handleCompletedChange(); }}
+                    checked={task.isCompleted()}
                 />
-                <label htmlFor={`important-${task.getId()}`} className="important-label">
+                <label htmlFor="important" className="important-label">
                     <div className="star unchecked"></div>
                     <div className="star checked"></div>
                 </label>
