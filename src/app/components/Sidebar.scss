@@ -139,12 +139,12 @@
 
         & button:first-child{
           h3{
-            color: rgb(var(--button-bg));
+            color: rgb(var(--button-fg));
 
           }
           .key-to-press{
-            border-color: rgb(var(--button-bg));
-            color: rgb(var(--button-bg));
+            border-color: rgb(var(--button-fg));
+            color: rgb(var(--button-fg));
 
           }
         }
