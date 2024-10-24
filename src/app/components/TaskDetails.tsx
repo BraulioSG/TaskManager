@@ -132,11 +132,11 @@ export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
                     className="task-details_description"
                     value={task.getDescription()}
                     onChange={(e) => handleChange("description", e.target.value)}
-                    placeholder="Descripción de la tarea"
+                    placeholder="Task Description"
                 />
             </div>
             <div className="due-date-section">
-                <label htmlFor="due-date">Fecha de vencimiento (DD-MM-YYYY):</label>
+                <label htmlFor="due-date">Expiration Date (DD-MM-YYYY):</label>
 
                 <input
                     type="date"
@@ -152,12 +152,12 @@ export default function TaskDetails({ task, onClose }: TaskDetailsProps) {
                     task.getImageUrl() ? (
                         <img src={`${task.getImageUrl()}`} alt="image" />
                     ) : (
-                        <p>No hay imagen</p>	
+                        <p>There is no image</p>	
                     )
                 }
                 <div className="btn-img" onClick={handleImage}>
                     <MdImage className="btn-img_icon"/>
-                    <p className="btn-img_text">Añadir imagen</p>
+                    <p className="btn-img_text">Add image</p>
                 </div>
             </div>
             <div className="btn-delete" onClick={handleDelete}>

@@ -177,6 +177,10 @@
         padding: 8px 0;
         gap: 5px;
 
+        p{
+            font-size: 14px;
+            color: var(--text);
+        }
         img{
             width: 80%;
             object-fit: cover;
