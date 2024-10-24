@@ -42,8 +42,7 @@ export default function TasksContainer({ setLists }: { setLists: (lists: TaskLis
         }
     };
 
-    // Cambia el tipo de e a React.MouseEvent<HTMLDivElement>
-    const handleOutsideClick = (e: React.MouseEvent<HTMLElement>) => {
+    const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!(e.target as Element).closest('.tasks-component') && !(e.target as Element).closest('.sidebar')) {
             setSelectedTask(null);
         }
